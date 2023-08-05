@@ -1,5 +1,10 @@
 import { useCallback, useState } from 'react';
-import { Card, CardContent, Table as MuiTable } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Table as MuiTable,
+} from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +17,7 @@ import queryString from 'query-string';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LoadingTableSkeleton from '../loading/TableLoading';
 import { COLORS } from '../../styles/color';
+import { HStack } from '../HStack';
 
 export function Table({
   headers,
@@ -20,26 +26,30 @@ export function Table({
   height = '65vh',
   loading = false,
   buttons,
+  extraActionButtons,
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const location = useLocation();
   const navigate = useNavigate();
   const query = queryString.parse(location.search);
-  const handleChangePage = useCallback((_event, newPage) => {
-    navigate(`${location.pathname}?page=${newPage}&limit=${rowsPerPage}`);
-  }, [location.pathname, navigate, rowsPerPage]);
+  const handleChangePage = useCallback(
+    (_event, newPage) => {
+      navigate(`${location.pathname}?page=${newPage}&limit=${rowsPerPage}`);
+    },
+    [location.pathname, navigate, rowsPerPage],
+  );
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     navigate(
       `${location.pathname}?page=${
-        query.page ? Number(query.page): 1
+        query.page ? Number(query.page) : 1
       }&limit=${parseInt(event.target.value, 10)}`,
     );
   };
 
   return (
-    <Card>
+    <CardWrapper>
       {buttons && (
         <CardContent>
           <ButtonContainer>{buttons}</ButtonContainer>
@@ -60,11 +70,14 @@ export function Table({
                       {header.label}
                     </StickyTableCell>
                   ))}
+                  {extraActionButtons && (
+                    <StickyTableCell>Actions</StickyTableCell>
+                  )}
                 </TableRow>
               </StickyTableHead>
               {loading && <LoadingTableSkeleton headers={headers} />}
               <TableBody>
-                {rows.map((row, index) => (
+                {rows?.map((row, index) => (
                   <TableRow
                     key={row.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -80,6 +93,22 @@ export function Table({
                           : row[header.value]}
                       </StickyTableCell>
                     ))}
+
+                    {extraActionButtons && (
+                      <TableCell>
+                        <HStack spacing={3}>
+                          {extraActionButtons.map((btn) => (
+                            <IconButton
+                              key={btn.icon}
+                              color={btn.color}
+                              onClick={() => btn.onClick(row.id)}
+                            >
+                              {btn.icon}
+                            </IconButton>
+                          ))}
+                        </HStack>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>
@@ -97,12 +126,17 @@ export function Table({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableFooter>
-    </Card>
+    </CardWrapper>
   );
 }
 
+const CardWrapper = styled(Card)`
+  width: 100%;
+`;
+
 const TableWrapper = styled(Paper)`
-  width: ${({ $width }) => $width};
+  //width: ${({ $width }) => $width};
+  width: 100%;
   overflow: scroll;
 `;
 
@@ -117,6 +151,7 @@ const ButtonContainer = styled.div`
 
 const StickyTableCell = styled(TableCell)`
   ${(props) =>
+    props.stickyLeft &&
     props.stickyLeft >= 0 &&
     css`
       position: sticky;
@@ -126,6 +161,7 @@ const StickyTableCell = styled(TableCell)`
     `}
 
   ${(props) =>
+    props.stickyRight &&
     props.stickyRight >= 0 &&
     css`
       position: sticky;
