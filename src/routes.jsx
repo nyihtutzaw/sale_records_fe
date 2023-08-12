@@ -15,6 +15,8 @@ import EditCustomer from './pages/customer/EditCustomer';
 import ProductList from './pages/product/ProductList';
 import CreateProduct from './pages/product/CreateProduct';
 import EditProduct from './pages/product/EditProduct';
+import SaleRecordList from './pages/saleRecord/SaleRecordList';
+import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 
 export const routes = [
   // {
@@ -73,6 +75,28 @@ export const routes = [
     component: EditProduct,
     invisible: true,
     layout: '/',
+  },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Sale Record',
+    collapse: true,
+    layout: '/',
+    view: [
+      {
+        icon: <TableViewOutlined />,
+        name: 'List',
+        path: 'sale-record-list',
+        layout: '/',
+        component: SaleRecordList,
+      },
+      {
+        icon: <TableViewOutlined />,
+        name: 'Create',
+        path: 'sale-record-create',
+        layout: '/',
+        component: CreateSaleRecord,
+      },
+    ],
   },
   // {
   //   icon: <DashboardIcon />,

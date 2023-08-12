@@ -16,7 +16,7 @@ function LoadingTableSkeleton({ headers }) {
       {rows.map((row) => (
         <TableRow key={row}>
           {headers.map((header) => (
-            <TableCell key={header}>
+            <TableCell key={header?.value}>
               <Skeleton variant="text" />
             </TableCell>
           ))}

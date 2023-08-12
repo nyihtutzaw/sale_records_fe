@@ -6,6 +6,8 @@ import toDo from './toDo';
 import user from './user';
 import customer from './customer';
 import product from './product';
+import saleRecord from './saleRecord';
+import saleRecordDetail from './saleRecordDetail';
 
 const reducers = combineReducers({
   status,
@@ -13,7 +15,9 @@ const reducers = combineReducers({
   toDo,
   user,
   customer,
-  product
+  product,
+  saleRecord,
+  saleRecordDetail
 });
 
 export default reducers;
