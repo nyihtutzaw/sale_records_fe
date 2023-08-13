@@ -6,6 +6,7 @@ import toDo from './toDo';
 import user from './user';
 import customer from './customer';
 import product from './product';
+import auth from './auth';
 import saleRecord from './saleRecord';
 import saleRecordDetail from './saleRecordDetail';
 
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   user,
   customer,
   product,
+  auth
   saleRecord,
   saleRecordDetail
 });

@@ -18,21 +18,33 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { MenuListItems } from './MenuListItems';
 import { COLORS } from '../../styles/color';
 import { HStack } from '../HStack';
 import Profile from '../../assets/images/person.png';
 import Logo from '../../assets/images/coca-cola.png';
+import { logout } from '../../store/actions';
 
 function AdminNavBar({ open, toggleDrawer }) {
+  const auth = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/auth/login');
+  };
+
 
   return (
     <FlexBox>
@@ -57,7 +69,7 @@ function AdminNavBar({ open, toggleDrawer }) {
 
           <HStack>
             <Avatar alt="P" src={Profile} />
-            <Typography onClick={handleClick}>Name</Typography>
+            <Typography onClick={handleClick}>{auth.user?.name}</Typography>
           </HStack>
 
           <Menu anchorEl={anchorEl} open={openMenu} onClose={handleClose}>
@@ -65,9 +77,9 @@ function AdminNavBar({ open, toggleDrawer }) {
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText>Name</ListItemText>
+              <ListItemText>{auth.user?.name}</ListItemText>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
