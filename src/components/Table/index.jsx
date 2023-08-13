@@ -63,7 +63,8 @@ export function Table({
                 <TableRow>
                   {headers.map((header) => (
                     <StickyTableCell
-                      key={`table-header-${header.value}`}
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={`table-header-${header?.value}`}
                       stickyleft={header.stickyLeft}
                       stickyright={header.stickyRight}
                     >
@@ -84,7 +85,8 @@ export function Table({
                   >
                     {headers.map((header) => (
                       <StickyTableCell
-                        key={`table-body-${header.value}`}
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={`table-body-${header?.value}`}
                         stickyleft={header.stickyLeft}
                         stickyright={header.stickyRight}
                       >
@@ -99,7 +101,7 @@ export function Table({
                         <HStack spacing={3}>
                           {extraActionButtons.map((btn) => (
                             <IconButton
-                              key={btn.icon}
+                              key={btn.key}
                               color={btn.color}
                               onClick={() => btn.onClick(row.id)}
                             >
@@ -165,7 +167,7 @@ const StickyTableCell = styled(TableCell)`
     props.stickyright >= 0 &&
     css`
       position: sticky;
-      right: ${props.stickyRight}px;
+      right: ${props.stickyright}px;
       z-index: 1;
       background-color: ${COLORS.CELL_COLOR};
     `}

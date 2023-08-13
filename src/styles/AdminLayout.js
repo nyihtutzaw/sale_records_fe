@@ -11,7 +11,6 @@ export const AdminLayout = styled(Box)`
     display: flex;
     justify-content: center;
     padding:20px;
-    height:90vh;
     margin-top: 10vh;
     ${({ open }) => open
       && css`
