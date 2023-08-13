@@ -18,12 +18,12 @@ export default function ProductDetailsDialog({ open, toggle, data }) {
               <TableCell component="th" scope="row">
                 {index + 1}
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell align="center">
                 {row?.Product?.name}
               </TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.price * row.qty}</TableCell>
+              <TableCell align="center">{row.price}</TableCell>
+              <TableCell align="center">{row.qty}</TableCell>
+              <TableCell align="center">{row.price * row.qty}</TableCell>
             </TableRow>
           ))}
         />

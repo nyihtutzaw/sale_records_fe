@@ -17,7 +17,7 @@ const reducers = combineReducers({
   user,
   customer,
   product,
-  auth
+  auth,
   saleRecord,
   saleRecordDetail
 });

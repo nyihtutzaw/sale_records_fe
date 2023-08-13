@@ -104,7 +104,7 @@ function CreateSaleRecord() {
       return;
     }
     setError(true);
-  }, []);
+  }, [dispatch, navigate, reset, saleRecordDetail?.saleRecordDetails]);
 
   useEffect(() => {
     if (error && saleRecordDetail?.saleRecordDetails?.length > 0) {
@@ -195,13 +195,13 @@ function CreateSaleRecord() {
                         <TableCell component="th" scope="row">
                           {index + 1}
                         </TableCell>
-                        <TableCell align="right">{row?.name}</TableCell>
-                        <TableCell align="right">{row.price}</TableCell>
-                        <TableCell align="right">{row.qty}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">{row?.name}</TableCell>
+                        <TableCell align="center">{row.price}</TableCell>
+                        <TableCell align="center">{row.qty}</TableCell>
+                        <TableCell align="center">
                           {row.price * row.qty}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           <IconButton
                             color="primary"
                             onClick={() => handleOpenEdit(row)}

@@ -14,11 +14,11 @@ export default function ProductTable({ tableBody, readOnly = false }) {
         <TableHead>
           <TableRow>
             <TableCell>No</TableCell>
-            <TableCell align="right">Product Name</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Qty</TableCell>
-            <TableCell align="right">Total</TableCell>
-            {!readOnly && <TableCell align="right">Actions</TableCell>}
+            <TableCell align="center">Product Name</TableCell>
+            <TableCell align="center">Price</TableCell>
+            <TableCell align="center">Qty</TableCell>
+            <TableCell align="center">Total</TableCell>
+            {!readOnly && <TableCell align="center">Actions</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>{tableBody}</TableBody>
