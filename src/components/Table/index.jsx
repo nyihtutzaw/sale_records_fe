@@ -64,8 +64,8 @@ export function Table({
                   {headers.map((header) => (
                     <StickyTableCell
                       key={`table-header-${header.value}`}
-                      stickyLeft={header.stickyLeft}
-                      stickyRight={header.stickyRight}
+                      stickyleft={header.stickyLeft}
+                      stickyright={header.stickyRight}
                     >
                       {header.label}
                     </StickyTableCell>
@@ -85,8 +85,8 @@ export function Table({
                     {headers.map((header) => (
                       <StickyTableCell
                         key={`table-body-${header.value}`}
-                        stickyLeft={header.stickyLeft}
-                        stickyRight={header.stickyRight}
+                        stickyleft={header.stickyLeft}
+                        stickyright={header.stickyRight}
                       >
                         {header.content
                           ? header.content(row[header.value], index)
@@ -151,18 +151,18 @@ const ButtonContainer = styled.div`
 
 const StickyTableCell = styled(TableCell)`
   ${(props) =>
-    props.stickyLeft &&
-    props.stickyLeft >= 0 &&
+    props.stickyleft &&
+    props.stickyleft >= 0 &&
     css`
       position: sticky;
-      left: ${props.stickyLeft}px;
+      left: ${props.stickyleft}px;
       z-index: 1;
       background-color: ${COLORS.CELL_COLOR};
     `}
 
   ${(props) =>
-    props.stickyRight &&
-    props.stickyRight >= 0 &&
+    props.stickyright &&
+    props.stickyright >= 0 &&
     css`
       position: sticky;
       right: ${props.stickyRight}px;

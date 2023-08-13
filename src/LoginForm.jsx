@@ -1,19 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Avatar,
-  Button,
-  Card,
-} from '@mui/material';
-import { useState } from 'react';
+import { Avatar, Button, Card } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import * as yup from 'yup';
 
 import HomeIcon from '@mui/icons-material/Home';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Input } from './components/Input';
 import { FlexAlignCenter } from './styles/common';
+import { getCache } from './utils/cache';
+import { login } from './store/actions';
 
 function LoginForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const TOKEN = getCache(`access_token`);
+
+  useEffect(() => {
+    if (TOKEN) navigate('/');
+  }, []);
+
   const schema = yup
     .object()
     .shape({
@@ -32,6 +40,7 @@ function LoginForm() {
   const submit = (data) => {
     // eslint-disable-next-line no-console
     console.log(data);
+    dispatch(login(data));
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -45,14 +54,12 @@ function LoginForm() {
           </StyledAvatar>
         </UpperContainer>
         <LowerContainer>
-          <ContentWrapper>
+          <Form onSubmit={handleSubmit(submit)}>
             <Card
-              component="form"
-              onSubmit={handleSubmit(submit)}
               sx={{
                 width: '80%',
                 padding: '10px 30px',
-                 paddingBottom: '50px',
+                paddingBottom: '50px',
               }}
             >
               <Title>Login</Title>
@@ -94,7 +101,7 @@ function LoginForm() {
             <LoginButton type="submit" variant="contained">
               Log In
             </LoginButton>
-          </ContentWrapper>
+          </Form>
         </LowerContainer>
       </StyledCard>
     </FlexAlignCenter>
@@ -135,7 +142,7 @@ const LowerContainer = styled.div`
   position: relative;
 `;
 
-const ContentWrapper = styled.div`
+const Form = styled.form`
   width: 100%;
   zindex: 2;
   position: absolute;
