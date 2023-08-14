@@ -63,9 +63,10 @@ export function Table({
                 <TableRow>
                   {headers.map((header) => (
                     <StickyTableCell
-                      key={`table-header-${header.value}`}
-                      stickyLeft={header.stickyLeft}
-                      stickyRight={header.stickyRight}
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={`table-header-${header?.value}`}
+                      stickyleft={header.stickyLeft}
+                      stickyright={header.stickyRight}
                     >
                       {header.label}
                     </StickyTableCell>
@@ -84,9 +85,10 @@ export function Table({
                   >
                     {headers.map((header) => (
                       <StickyTableCell
-                        key={`table-body-${header.value}`}
-                        stickyLeft={header.stickyLeft}
-                        stickyRight={header.stickyRight}
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={`table-body-${header?.value}`}
+                        stickyleft={header.stickyLeft}
+                        stickyright={header.stickyRight}
                       >
                         {header.content
                           ? header.content(row[header.value], index)
@@ -99,7 +101,7 @@ export function Table({
                         <HStack spacing={3}>
                           {extraActionButtons.map((btn) => (
                             <IconButton
-                              key={btn.icon}
+                              key={btn.key}
                               color={btn.color}
                               onClick={() => btn.onClick(row.id)}
                             >
@@ -151,21 +153,21 @@ const ButtonContainer = styled.div`
 
 const StickyTableCell = styled(TableCell)`
   ${(props) =>
-    props.stickyLeft &&
-    props.stickyLeft >= 0 &&
+    props.stickyleft &&
+    props.stickyleft >= 0 &&
     css`
       position: sticky;
-      left: ${props.stickyLeft}px;
+      left: ${props.stickyleft}px;
       z-index: 1;
       background-color: ${COLORS.CELL_COLOR};
     `}
 
   ${(props) =>
-    props.stickyRight &&
-    props.stickyRight >= 0 &&
+    props.stickyright &&
+    props.stickyright >= 0 &&
     css`
       position: sticky;
-      right: ${props.stickyRight}px;
+      right: ${props.stickyright}px;
       z-index: 1;
       background-color: ${COLORS.CELL_COLOR};
     `}

@@ -19,6 +19,7 @@ function ProductList() {
   const headers = [
     {
       label: 'No',
+      value: 'No',
       content: (_data, index) => index + 1,
     },
     {

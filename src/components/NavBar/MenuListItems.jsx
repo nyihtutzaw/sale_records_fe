@@ -32,7 +32,7 @@ export function MenuListItems() {
               key={`menu-link-${route.name}`}
               component={Link}
               to={route.layout + route.path}
-              active={location.pathname === route.path}
+              active={String(location.pathname === route.path)}
             >
               {route.icon}
               <ListItemText primary={route.name} />
@@ -68,7 +68,7 @@ function CollapseMenuItem({ icon, name, view }) {
               sx={{ pl: 4 }}
               component={Link}
               to={route.layout + route.path}
-              active={location.pathname === route.path}
+              active={String(location.pathname === route.path)}
             >
                 {route.icon}
               <ListItemText primary={route.name} />

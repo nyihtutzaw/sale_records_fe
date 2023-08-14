@@ -19,6 +19,7 @@ function CustomerList() {
   const headers = [
     {
       label: 'No',
+      value: 'No',
       content: (_data, index) => index + 1,
     },
     {
@@ -29,9 +30,8 @@ function CustomerList() {
       label: 'Phone',
       value: 'phone',
     },
-   
   ];
-  const { showConfirmDialog,closeConfirmDialog } = useDialog();
+  const { showConfirmDialog, closeConfirmDialog } = useDialog();
 
   const handleAddNew = () => {
     navigate('/customer-create');
@@ -50,11 +50,9 @@ function CustomerList() {
 
   const actionButtons = useMemo(
     () => (
-
-        <Button color="primary" variant="contained" onClick={handleAddNew}>
-          Add New
-        </Button>
- 
+      <Button color="primary" variant="contained" onClick={handleAddNew}>
+        Add New
+      </Button>
     ),
     [],
   );

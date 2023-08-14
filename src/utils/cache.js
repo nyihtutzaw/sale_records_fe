@@ -1,4 +1,4 @@
-const np = '__easyFDLiveB#$__';
+const np = '__saleRecord#$__';
 
 export function storeCache(name, value) {
   localStorage.setItem(`${np}${name}`, value);

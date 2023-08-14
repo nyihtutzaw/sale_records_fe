@@ -1,6 +1,7 @@
 import axios from 'axios';
-// import { getCache, removeCache } from 'utli/cache';
+
 import { NotificationManager } from 'react-notifications';
+import { getCache } from '../utils/cache';
 
 export const apiEndpoint = `${import.meta.env.VITE_REACT_APP_API_ENDPOINT}`;
 
@@ -10,10 +11,10 @@ const headers = {
 };
 
 export async function getData(url, params) {
-  // const token = getCache('access_token')
-  // if (token) {
-  //   headers.Authorization = `Bearer ${token}`
-  // }
+  const token = getCache('access_token')
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
   axios.defaults.headers = headers;
 
   const response = await axios
@@ -30,10 +31,10 @@ export async function getData(url, params) {
 }
 
 export async function sendData(url, data, type = 'POST', showNoti = true) {
-  // const token = getCache('access_token')
-  // if (token) {
-  //   headers.Authorization = `Bearer ${token}`
-  // }
+  const token = getCache('access_token')
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
   axios.defaults.headers = headers;
   let response;
 
@@ -51,20 +52,20 @@ export async function sendData(url, data, type = 'POST', showNoti = true) {
 }
 
 export async function sendForBlobData(url, data, options) {
-  // const token = getCache('access_token')
-  // if (token) {
-  //   headers.Authorization = `Bearer ${token}`
-  // }
+  const token = getCache('access_token')
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
   axios.defaults.headers = headers;
   const response = await axios.post(`${apiEndpoint}${url}`, data, options);
   return response.data;
 }
 
 export async function getForBlobData(url, options) {
-  // const token = getCache('access_token')
-  // if (token) {
-  //   headers.Authorization = `Bearer ${token}`
-  // }
+  const token = getCache('access_token')
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
   axios.defaults.headers = headers;
   const response = await axios.get(`${apiEndpoint}${url}`, options);
   return response.data;

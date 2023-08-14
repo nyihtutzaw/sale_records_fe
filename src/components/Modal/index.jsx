@@ -15,6 +15,7 @@ export function Modal({
   buttons,
   maxWidth = 'sm',
   justifyContent = 'flex-end',
+ 
 }) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth={maxWidth} fullWidth>
@@ -45,6 +46,7 @@ const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   padding:0px 20px;
+  gap: 10px;
 `;
 
 
