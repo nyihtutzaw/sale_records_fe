@@ -144,10 +144,10 @@ function InputForm({ title,editData }) {
 export default InputForm;
 
 const FormPageWrapper = styled.div`
-  width: 100%;
+   width: 100%;
 `;
 const StyledCard = styled(Card)`
   margin-top: 10vh;
-  min-height: 60vh;
-  min-width: 60vh;
+  display: flex;
+  flex-direction: column;
 `;

@@ -144,7 +144,7 @@ function CreateSaleRecord() {
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <FormItem label="Date">
                       <Input
                         control={control}
@@ -156,7 +156,7 @@ function CreateSaleRecord() {
                       />
                     </FormItem>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <FormItem label="Customer">
                       <Input
                         control={control}
@@ -169,7 +169,7 @@ function CreateSaleRecord() {
                       />
                     </FormItem>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item sm={6}>
                     <Button
                       type="button"
                       color="secondary"
@@ -266,8 +266,6 @@ const Error = styled.span`
 `;
 const StyledCard = styled(Card)`
   margin-top: 10vh;
-  min-height: 60vh;
-  min-width: 40vh;
   display: flex;
   flex-direction: column;
 `;

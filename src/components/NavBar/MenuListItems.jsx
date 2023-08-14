@@ -13,7 +13,7 @@ import { COLORS } from "../../styles/color";
 export function MenuListItems() {
   const location = useLocation();
 
-
+  console.log(location.pathname);
   return (
     <>
       {routes.map((route) =>
@@ -32,7 +32,7 @@ export function MenuListItems() {
               key={`menu-link-${route.name}`}
               component={Link}
               to={route.layout + route.path}
-              active={String(location.pathname === route.path)}
+              active={Boolean(location.pathname === (route.layout + route.path))}
             >
               {route.icon}
               <ListItemText primary={route.name} />
@@ -56,19 +56,19 @@ function CollapseMenuItem({ icon, name, view }) {
 
   return (
     <>
-      <MenuListItemButton onClick={handleClick}>
+      <MenuListItemButton onClick={handleClick} >
        {icon}
         <ListItemText primary={name} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </MenuListItemButton>
-      <Collapse in={open} unmountOnExit>
+      <Collapse in={open} unmountOnExit >
         {view?.map((route) => (
           <React.Fragment key={route.name}>
             <MenuListItemButton
               sx={{ pl: 4 }}
               component={Link}
               to={route.layout + route.path}
-              active={String(location.pathname === route.path)}
+              active={Boolean(location.pathname === route.layout + route.path)}
             >
                 {route.icon}
               <ListItemText primary={route.name} />
@@ -84,6 +84,7 @@ const MenuListItemButton = styled(ListItemButton)`
   && {
     display: flex;
     gap: 30px;
+    color: #525f7f;
     background-color: ${({ active }) => active && COLORS.LIGHT_PRIMARY};
   }
   && {

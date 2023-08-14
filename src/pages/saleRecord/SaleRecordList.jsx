@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import dayjs from 'dayjs';
 import { FormatListNumbered } from '@mui/icons-material';
+import styled from 'styled-components';
 import { getSaleRecords, deleteSaleRecord } from '../../store/actions';
 import { Table } from '../../components/Table';
 import useDialog from '../../hooks/useDialog';
@@ -70,7 +71,7 @@ function SaleRecordList() {
   };
 
   return (
-    <>
+    <TableWrapper>
       <Table
         headers={headers}
         loading={status.loading}
@@ -106,7 +107,11 @@ function SaleRecordList() {
         toggle={toggle}
         data={detailRecord}
       />
-    </>
+    </TableWrapper>
   );
 }
 export default SaleRecordList;
+
+const TableWrapper = styled.div`
+ width: 100%;
+`

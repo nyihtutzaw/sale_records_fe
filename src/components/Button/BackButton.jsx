@@ -8,6 +8,9 @@ export default function BackButton({ route }) {
     <Button
       variant="outlined"
       size="sm"
+      sx={{
+        margin: '0px 20px'
+      }}
       color="success"
       onClick={() => {
         navigate(route);

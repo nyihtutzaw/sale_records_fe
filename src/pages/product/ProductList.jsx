@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
 import { deleteProduct, getProducts } from '../../store/actions';
 import { Table } from '../../components/Table';
 import useDialog from '../../hooks/useDialog';
@@ -67,7 +68,8 @@ function ProductList() {
   }, [dispatch, location.search]);
 
   return (
-    <Table
+   <TableWrapper>
+     <Table
       buttons={actionButtons}
       headers={headers}
       loading={status.loading}
@@ -95,6 +97,12 @@ function ProductList() {
         },
       ]}
     />
+   </TableWrapper>
   );
 }
 export default ProductList;
+
+const TableWrapper = styled.div`
+ width: 100%;
+`
+

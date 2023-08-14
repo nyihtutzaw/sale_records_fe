@@ -10,7 +10,7 @@ import { routes } from '../routes';
 function PrivateRoute() {
   const theme = useTheme();
   const TOKEN = getCache('access_token');
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -41,8 +41,22 @@ function PrivateRoute() {
       <header>
         <AdminNavBar open={open} toggleDrawer={toggleDrawer} />
       </header>
-      <AdminLayout open={open} theme={theme}>
-        <Routes>{getRoutes(routes)}</Routes>
+      <AdminLayout
+        open={open}
+        theme={theme}
+        onClick={() => {
+          if (window.innerWidth < 600 && open) {
+            setOpen(false);
+          }
+        }}
+      >
+        <Routes>
+          {getRoutes(routes)}
+          <Route
+            path="/"
+            element={<Navigate to="/sale-record-create" replace />}
+          />
+        </Routes>
       </AdminLayout>
     </div>
   ) : (

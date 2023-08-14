@@ -30,7 +30,7 @@ export const routes = [
   {
     icon: <DashboardIcon />,
     name: 'Dashboard',
-    path: '',
+    path: 'home',
     component: Dashboard,
     layout: '/',
   },
