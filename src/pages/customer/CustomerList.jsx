@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
 import { deleteCustomer, getCustomers } from '../../store/actions';
 import { Table } from '../../components/Table';
 import useDialog from '../../hooks/useDialog';
@@ -64,34 +65,41 @@ function CustomerList() {
   }, [dispatch, location.search]);
 
   return (
-    <Table
-      buttons={actionButtons}
-      headers={headers}
-      loading={status.loading}
-      rows={customer.customers}
-      extraActionButtons={[
-        {
-          icon: <EditIcon />,
-          color: 'primary',
-          onClick: (id) => {
-            handleEdit(id);
+    <TableWrapper>
+      <Table
+        buttons={actionButtons}
+        headers={headers}
+        loading={status.loading}
+        rows={customer.customers}
+        extraActionButtons={[
+          {
+            icon: <EditIcon />,
+            color: 'primary',
+            onClick: (id) => {
+              handleEdit(id);
+            },
           },
-        },
-        {
-          icon: <DeleteIcon />,
-          color: 'error',
-          onClick: (id) => {
-            showConfirmDialog({
-              title: 'Sample Confirm Dialog',
-              body: 'Are you sure to delete?',
-              onConfirm: () => handleDelete(id),
-              cancelLabel: 'Cancel',
-              acceptLabel: 'Confirm',
-            });
+          {
+            icon: <DeleteIcon />,
+            color: 'error',
+            onClick: (id) => {
+              showConfirmDialog({
+                title: 'Sample Confirm Dialog',
+                body: 'Are you sure to delete?',
+                onConfirm: () => handleDelete(id),
+                cancelLabel: 'Cancel',
+                acceptLabel: 'Confirm',
+              });
+            },
           },
-        },
-      ]}
-    />
+        ]}
+      />
+    </TableWrapper>
   );
 }
 export default CustomerList;
+
+const TableWrapper = styled.div`
+ width: 100%;
+`
+

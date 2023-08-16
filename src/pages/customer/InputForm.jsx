@@ -147,6 +147,4 @@ const FormPageWrapper = styled.div`
 `;
 const StyledCard = styled(Card)`
   margin-top: 10vh;
-  min-height: 60vh;
-  min-width: 60vh;
 `;

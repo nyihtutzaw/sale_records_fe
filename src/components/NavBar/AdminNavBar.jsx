@@ -45,7 +45,6 @@ function AdminNavBar({ open, toggleDrawer }) {
     navigate('/auth/login');
   };
 
-
   return (
     <FlexBox>
       <CssBaseline />
@@ -89,10 +88,7 @@ function AdminNavBar({ open, toggleDrawer }) {
         </Toolbar>
       </MuiAppBar>
 
-      <Drawer
-        open={open}
-        variant="persistent"
-      >
+      <Drawer open={open} variant="persistent">
         <Toolbar />
         <DrawerContentContainer>
           <List component="nav">
