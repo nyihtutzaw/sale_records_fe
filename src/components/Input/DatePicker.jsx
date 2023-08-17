@@ -17,6 +17,7 @@ export function DatePicker({
   dateFormat = 'YYYY-MM-DD',
   ...otherProps
 }) {
+
   if (control)
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -28,13 +29,16 @@ export function DatePicker({
               <DatePickerUI
                 {...otherProps}
                 value={field.value}
+                defaultValue={dayjs(new Date())}
                 onChange={(date) =>
                   field.onChange(dayjs(new Date(date)).format(dateFormat))
                 }
               />
-              {otherProps?.error && <ErrorContaienr>
-                <span>{otherProps?.helperText}</span>
-              </ErrorContaienr>}
+              {otherProps?.error && (
+                <ErrorContaienr>
+                  <span>{otherProps?.helperText}</span>
+                </ErrorContaienr>
+              )}
             </>
           )}
         />
@@ -54,8 +58,8 @@ export function DatePickerUI({ ...otherProps }) {
       <MuiDatePicker
         {...otherProps}
         inputFormat="yyyy-MM-dd"
-        renderInput={(params) => <TextField  {...params}   />}
+        renderInput={(params) => <TextField {...params} />}
       />
-      </FormControl>
+    </FormControl>
   );
 }

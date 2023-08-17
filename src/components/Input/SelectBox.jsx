@@ -3,7 +3,8 @@ import { Controller } from 'react-hook-form';
 import { MenuItem, Select } from '@mui/material';
 import { ErrorContaienr } from '../../styles/common';
 
-export function SelectBox({ name, options, control,value:initValue,onChange:initOnChange, label, ...otherProps }) {
+export function SelectBox({ name, options, onValueChange,control,value:initValue,onChange:initOnChange, label, ...otherProps }) {
+
   if (control)
     return (
       <Controller
@@ -17,6 +18,7 @@ export function SelectBox({ name, options, control,value:initValue,onChange:init
               labelId={`${name}-label`}
               value={value || ''}
               onChange={(e) => {
+                if (onValueChange) onValueChange(e.target.value)
                 onChange(e.target.value);
               }}
               label={label}

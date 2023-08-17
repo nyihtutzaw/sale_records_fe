@@ -38,6 +38,16 @@ function SaleRecordList() {
       value: 'sale_record_details',
       content: (_data) => calculateSaleTotal(_data),
     },
+    {
+      label: 'Customer',
+      value: 'Customer',
+      content: (_data) => _data.name
+    },
+    {
+      label: 'Payment Method',
+      value: 'payment_method',
+      content: (_data) => _data.name
+    },
   ];
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
 

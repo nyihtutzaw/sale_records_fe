@@ -15,6 +15,9 @@ import EditCustomer from './pages/customer/EditCustomer';
 import ProductList from './pages/product/ProductList';
 import CreateProduct from './pages/product/CreateProduct';
 import EditProduct from './pages/product/EditProduct';
+import PaymentMethodList from './pages/paymentMethod/PaymentMethodList';
+import CreatePaymentMethod from './pages/paymentMethod/CreatePaymentMethod';
+import EditPaymentMethod from './pages/paymentMethod/EditPaymentMethod';
 import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 
@@ -73,6 +76,27 @@ export const routes = [
     name: 'Edit Product',
     path: '/product-edit/:id',
     component: EditProduct,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Payment Method',
+    path: 'payment-method',
+    layout: '/',
+    component: PaymentMethodList,
+  },
+  {
+    name: 'Create payment-method',
+    path: '/payment-method-create',
+    component: CreatePaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Payment method',
+    path: '/payment-method-edit/:id',
+    component: EditPaymentMethod,
     invisible: true,
     layout: '/',
   },
