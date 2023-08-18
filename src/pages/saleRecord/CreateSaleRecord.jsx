@@ -27,11 +27,12 @@ import ProductTable from './ProductTable';
 import NewProductDialog from './NewProductDialog';
 import { Input } from '../../components/Input';
 import * as saleRecordService from '../../services/saleRecordService';
-import { getCustomers } from '../../store/actions';
+import { getCustomers, getPaymentMethods } from '../../store/actions';
 import {
   deleteProductInSaleRecords,
   getProductOptions,
 } from '../../store/actions/saleRecordDetail';
+
 
 function CreateSaleRecord() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -39,6 +40,7 @@ function CreateSaleRecord() {
   const [error, setError] = useState(false);
   const { loading } = useSelector((state) => state.status);
   const customer = useSelector((state) => state.customer);
+  const paymentMethod = useSelector((state) => state.paymentMethod);
   const saleRecordDetail = useSelector((state) => state.saleRecordDetail);
 
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ function CreateSaleRecord() {
     .object()
     .shape({
       customer_id: yup.number().required(),
+      payment_method_id: yup.number().required(),
       date: yup.string().required(),
     })
     .required();
@@ -62,6 +65,7 @@ function CreateSaleRecord() {
 
   useEffect(() => {
     dispatch(getCustomers());
+    dispatch(getPaymentMethods());
   }, []);
 
   const loadProducts = async () => {
@@ -76,16 +80,16 @@ function CreateSaleRecord() {
     value: eachCustomer?.id,
     label: eachCustomer?.name,
   }));
+  const paymentMethodOptions = paymentMethod?.paymentMethods?.map((eachpaymentMethod) => ({
+    value: eachpaymentMethod?.id,
+    label: eachpaymentMethod?.name,
+  }));
 
   const submit = useCallback(async (values) => {
     if (saleRecordDetail?.saleRecordDetails?.length > 0) {
       dispatch({
         type: SET_LOADING,
         payload: true,
-      });
-      console.log({
-        ...values,
-        sale_record_details: saleRecordDetail?.saleRecordDetails,
       });
       // eslint-disable-next-line no-unused-expressions
       const status = await saleRecordService.store({
@@ -130,7 +134,7 @@ function CreateSaleRecord() {
 
   return (
     <FormPageWrapper>
-      <BackButton route="/product" />
+      <BackButton route="/sale-record-list" />
       <Container maxWidth="md">
         <StyledCard component="form" onSubmit={handleSubmit(submit)}>
           <CardContent>
@@ -144,7 +148,7 @@ function CreateSaleRecord() {
                   alignItems="center"
                   justifyContent="space-between"
                 >
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={4}>
                     <FormItem label="Date">
                       <Input
                         control={control}
@@ -153,10 +157,11 @@ function CreateSaleRecord() {
                         inputType={InputType.date}
                         error={errors.date?.message}
                         helperText={errors.date?.message}
+
                       />
                     </FormItem>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={4}>
                     <FormItem label="Customer">
                       <Input
                         control={control}
@@ -169,7 +174,20 @@ function CreateSaleRecord() {
                       />
                     </FormItem>
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={4}>
+                    <FormItem label="Payment Method">
+                      <Input
+                        control={control}
+                        options={paymentMethodOptions}
+                        registerProps={register('payment_method_id')}
+                        name="payment_method_id"
+                        inputType={InputType.select}
+                        error={errors.payment_method_id?.message}
+                        helperText={errors.payment_method_id?.message}
+                      />
+                    </FormItem>
+                  </Grid>
+                  <Grid item sm={4}>
                     <Button
                       type="button"
                       color="secondary"
