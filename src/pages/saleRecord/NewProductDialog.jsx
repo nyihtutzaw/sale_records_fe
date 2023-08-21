@@ -38,6 +38,12 @@ export default function NewProductDialog({
     })
     .required();
 
+  const defaultValues = {
+      product_id: editData ? editData?.product_id : null,
+      price: editData ? editData?.price : null,
+      qty: editData ? editData?.qty : null,
+    }
+
   const {
     control,
     register,
@@ -48,11 +54,7 @@ export default function NewProductDialog({
     setValue,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      product_id: editData ? editData?.product_id : null,
-      price: editData ? editData?.price : null,
-      qty: editData ? editData?.qty : null,
-    },
+    defaultValues,
   });
 
   const updatedPrice = watch('price');
@@ -82,8 +84,8 @@ export default function NewProductDialog({
     } else {
       dispatch(addProductToSaleRecords(data));
     }
-    reset();
-    toggle();
+    reset(); 
+    // toggle();
   };
 
   return (

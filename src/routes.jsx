@@ -20,6 +20,9 @@ import CreatePaymentMethod from './pages/paymentMethod/CreatePaymentMethod';
 import EditPaymentMethod from './pages/paymentMethod/EditPaymentMethod';
 import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
+import AdminList from './pages/admin/AdminList';
+import CreateAdmin from './pages/admin/CreateAdmin';
+import EditAdmin from './pages/admin/EditAdmin';
 
 export const routes = [
   // {
@@ -35,6 +38,27 @@ export const routes = [
     name: 'Dashboard',
     path: 'home',
     component: Dashboard,
+    layout: '/',
+  },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Admin',
+    path: 'admin',
+    layout: '/',
+    component: AdminList,
+  },
+  {
+    name: 'Create Admin',
+    path: '/admin-create',
+    component: CreateAdmin,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Admin',
+    path: '/admin-edit/:id',
+    component: EditAdmin,
+    invisible: true,
     layout: '/',
   },
   {
