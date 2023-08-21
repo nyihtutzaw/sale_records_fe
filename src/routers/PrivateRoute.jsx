@@ -52,10 +52,6 @@ function PrivateRoute() {
       >
         <Routes>
           {getRoutes(routes)}
-          <Route
-            path="/"
-            element={<Navigate to="/sale-record-create" replace />}
-          />
         </Routes>
       </AdminLayout>
     </div>

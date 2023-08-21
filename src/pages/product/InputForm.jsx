@@ -24,6 +24,7 @@ function InputForm({ title,editData }) {
     .shape({
       name: yup.string().required(),
       price: yup.number().required(),
+      initPrice: yup.number().required(),
     })
     .required();
   const {
@@ -32,12 +33,19 @@ function InputForm({ title,editData }) {
     formState: { errors, isDirty },
     reset,
   } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      name: editData ? editData?.name : null,
-      price: editData ? editData?.price : null,
-    },
+    resolver: yupResolver(schema)
   });
+
+
+  useEffect(()=>{
+    if (editData){
+      reset({
+        name:editData.name,
+        price:editData.price,
+        initPrice:editData.initPrice,
+      })
+    }
+  },[editData, reset])
 
 
   const submit = useCallback(
@@ -60,18 +68,9 @@ function InputForm({ title,editData }) {
         navigate('/product');
       }
     },
-    [editData],
+    [dispatch, editData, navigate, reset],
   );
 
-  useEffect(() => {
-    if (editData) {
-      reset({
-        name: editData?.name,
-      });
-    } else {
-      reset();
-    }
-  }, [editData, reset]);
 
   const isDisabled = () => {
     if(loading) {
@@ -118,6 +117,19 @@ function InputForm({ title,editData }) {
                         autoFocus
                         error={errors.price?.message}
                         helperText={errors.price?.message}
+                        inputType={InputType.text}
+                        type="number"
+                      />
+                    </FormItem>
+                    <FormItem label="initPrice">
+                      <Input
+                        registerProps={register('initPrice')}
+                        variant="outlined"
+                        name="initPrice"
+                        autoComplete="initPrice"
+                        autoFocus
+                        error={errors.initPrice?.message}
+                        helperText={errors.initPrice?.message}
                         inputType={InputType.text}
                         type="number"
                       />

@@ -1,14 +1,6 @@
 import { TableViewOutlined } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-// import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
 import * as React from 'react';
-import Dashboard from './pages/Home';
-// import DummyPage from './pages/DummyPage';
-// import FormPage from './pages/Form';
-// import TablePage from './pages/Table';
-// import ModalPage from './pages/ModalPage';
-// import SamplePage from './pages/Sample';
 import CustomerList from './pages/customer/CustomerList';
 import CreateCustomer from './pages/customer/CreateCustomer';
 import EditCustomer from './pages/customer/EditCustomer';
@@ -25,19 +17,11 @@ import CreateAdmin from './pages/admin/CreateAdmin';
 import EditAdmin from './pages/admin/EditAdmin';
 
 export const routes = [
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Sample Page',
-  //   path: '/sample',
-  //   component: SamplePage,
-  //   invisible: true,
-  //   layout: '/auth',
-  // },
   {
     icon: <DashboardIcon />,
-    name: 'Dashboard',
-    path: 'home',
-    component: Dashboard,
+    name: 'Sale Screen',
+    path: '',
+    component: CreateSaleRecord,
     layout: '/',
   },
   {
@@ -104,6 +88,20 @@ export const routes = [
     layout: '/',
   },
   {
+    name: 'Create payment-method',
+    path: '/payment-method-create',
+    component: CreatePaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Payment method',
+    path: '/payment-method-edit/:id',
+    component: EditPaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
     icon: <TableViewOutlined />,
     name: 'Payment Method',
     path: 'payment-method',
@@ -137,57 +135,23 @@ export const routes = [
         layout: '/',
         component: SaleRecordList,
       },
-      {
-        icon: <TableViewOutlined />,
-        name: 'Create',
-        path: 'sale-record-create',
-        layout: '/',
-        component: CreateSaleRecord,
-      },
+    
     ],
   },
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Dummy Page',
-  //   path: 'dummy',
-  //   layout: '/',
-  //   component: DummyPage
-  // },
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Sample Page',
-  //   path: 'sample',
-  //   layout: '/',
-  //   component: SamplePage,
-  //   invisible: true
-  // },
-  // {
-  //   icon: <InboxIcon />,
-  //   name: 'Collapse' ,
-  //   collapse: true,
-  //   layout: '/',
-  //   view: [
-  //     {
-  //       icon: <TableViewOutlined />,
-  //       name: 'Form',
-  //       path: 'form',
-  //       layout: '/',
-  //       component: FormPage
-  //     },
-  //     {
-  //       icon: <TableViewOutlined />,
-  //       name: 'Table',
-  //       path: 'table',
-  //       layout: '/',
-  //       component: TablePage
-  //     },
-  //     {
-  //       icon: <InsertDriveFileIcon />,
-  //       name: 'Modal',
-  //       path: 'modal-box',
-  //       layout: '/',
-  //       component: ModalPage
-  //     },
-  //   ],
-  // },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Setting',
+    collapse: true,
+    layout: '/',
+    view: [
+      {
+        icon: <TableViewOutlined />,
+        name: 'Payment Method',
+        path: 'payment-method',
+        layout: '/',
+        component: PaymentMethodList,
+      },
+    
+    ],
+  },
 ];

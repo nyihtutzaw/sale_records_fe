@@ -18,9 +18,9 @@ function LoginForm() {
   const dispatch = useDispatch();
   const TOKEN = getCache(`access_token`);
 
-  useEffect(() => {
-    if (TOKEN) navigate('/');
-  }, []);
+  // useEffect(() => {
+  //   if (TOKEN) navigate('/');
+  // }, []);
 
   const schema = yup
     .object()
