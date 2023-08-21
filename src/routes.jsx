@@ -1,14 +1,6 @@
 import { TableViewOutlined } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-// import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
 import * as React from 'react';
-import Dashboard from './pages/Home';
-// import DummyPage from './pages/DummyPage';
-// import FormPage from './pages/Form';
-// import TablePage from './pages/Table';
-// import ModalPage from './pages/ModalPage';
-// import SamplePage from './pages/Sample';
 import CustomerList from './pages/customer/CustomerList';
 import CreateCustomer from './pages/customer/CreateCustomer';
 import EditCustomer from './pages/customer/EditCustomer';
@@ -19,19 +11,11 @@ import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 
 export const routes = [
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Sample Page',
-  //   path: '/sample',
-  //   component: SamplePage,
-  //   invisible: true,
-  //   layout: '/auth',
-  // },
   {
     icon: <DashboardIcon />,
-    name: 'Dashboard',
-    path: 'home',
-    component: Dashboard,
+    name: 'Sale Screen',
+    path: '',
+    component: CreateSaleRecord,
     layout: '/',
   },
   {
@@ -89,13 +73,7 @@ export const routes = [
         layout: '/',
         component: SaleRecordList,
       },
-      {
-        icon: <TableViewOutlined />,
-        name: 'Create',
-        path: 'sale-record-create',
-        layout: '/',
-        component: CreateSaleRecord,
-      },
+    
     ],
   },
   // {

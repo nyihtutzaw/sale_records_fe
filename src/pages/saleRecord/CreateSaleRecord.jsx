@@ -11,10 +11,9 @@ import {
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import * as yup from 'yup';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Delete, Edit } from '@mui/icons-material';
@@ -22,7 +21,6 @@ import { FormItem } from '../../components/FormItem';
 import { InputType } from '../../constants';
 import { FlexAlignCenter } from '../../styles/common';
 import { SET_LOADING } from '../../store/types/status';
-import BackButton from '../../components/Button/BackButton';
 import ProductTable from './ProductTable';
 import NewProductDialog from './NewProductDialog';
 import { Input } from '../../components/Input';
@@ -130,7 +128,6 @@ function CreateSaleRecord() {
 
   return (
     <FormPageWrapper>
-      <BackButton route="/product" />
       <Container maxWidth="md">
         <StyledCard component="form" onSubmit={handleSubmit(submit)}>
           <CardContent>

@@ -28,6 +28,10 @@ function ProductList() {
       value: 'name',
     },
     {
+      label: 'Init Price',
+      value: 'initPrice',
+    },
+    {
       label: 'Price',
       value: 'price',
     },
