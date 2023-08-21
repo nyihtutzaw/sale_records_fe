@@ -117,6 +117,10 @@ export default function NewProductDialog({
                 error={errors.product_id?.message}
                 helperText="Product is required"
                 disabled={editData}
+                onValueChange={(e) => {
+                  const selectedProduct = products.find(product => product?.id === e)
+                  setValue('price', selectedProduct?.price)
+                }}
               />
             </FormItem>
           </Grid>

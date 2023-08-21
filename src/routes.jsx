@@ -7,6 +7,9 @@ import EditCustomer from './pages/customer/EditCustomer';
 import ProductList from './pages/product/ProductList';
 import CreateProduct from './pages/product/CreateProduct';
 import EditProduct from './pages/product/EditProduct';
+import PaymentMethodList from './pages/paymentMethod/PaymentMethodList';
+import CreatePaymentMethod from './pages/paymentMethod/CreatePaymentMethod';
+import EditPaymentMethod from './pages/paymentMethod/EditPaymentMethod';
 import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 
@@ -61,6 +64,20 @@ export const routes = [
     layout: '/',
   },
   {
+    name: 'Create payment-method',
+    path: '/payment-method-create',
+    component: CreatePaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Payment method',
+    path: '/payment-method-edit/:id',
+    component: EditPaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
     icon: <TableViewOutlined />,
     name: 'Sale Record',
     collapse: true,
@@ -76,48 +93,20 @@ export const routes = [
     
     ],
   },
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Dummy Page',
-  //   path: 'dummy',
-  //   layout: '/',
-  //   component: DummyPage
-  // },
-  // {
-  //   icon: <DashboardIcon />,
-  //   name: 'Sample Page',
-  //   path: 'sample',
-  //   layout: '/',
-  //   component: SamplePage,
-  //   invisible: true
-  // },
-  // {
-  //   icon: <InboxIcon />,
-  //   name: 'Collapse' ,
-  //   collapse: true,
-  //   layout: '/',
-  //   view: [
-  //     {
-  //       icon: <TableViewOutlined />,
-  //       name: 'Form',
-  //       path: 'form',
-  //       layout: '/',
-  //       component: FormPage
-  //     },
-  //     {
-  //       icon: <TableViewOutlined />,
-  //       name: 'Table',
-  //       path: 'table',
-  //       layout: '/',
-  //       component: TablePage
-  //     },
-  //     {
-  //       icon: <InsertDriveFileIcon />,
-  //       name: 'Modal',
-  //       path: 'modal-box',
-  //       layout: '/',
-  //       component: ModalPage
-  //     },
-  //   ],
-  // },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Setting',
+    collapse: true,
+    layout: '/',
+    view: [
+      {
+        icon: <TableViewOutlined />,
+        name: 'Payment Method',
+        path: 'payment-method',
+        layout: '/',
+        component: PaymentMethodList,
+      },
+    
+    ],
+  },
 ];
