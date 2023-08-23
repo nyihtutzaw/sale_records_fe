@@ -7,3 +7,4 @@ export * from './auth';
 export * from './saleRecord';
 export * from './saleRecordDetail';
 export * from './paymentMethod';
+export * from './admin';

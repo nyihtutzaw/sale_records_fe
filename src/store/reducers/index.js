@@ -10,6 +10,7 @@ import auth from './auth';
 import saleRecord from './saleRecord';
 import saleRecordDetail from './saleRecordDetail';
 import paymentMethod from './paymentMethod';
+import admin from './admin';
 
 const reducers = combineReducers({
   status,
@@ -21,7 +22,8 @@ const reducers = combineReducers({
   auth,
   saleRecord,
   saleRecordDetail,
-  paymentMethod
+  paymentMethod,
+  admin
 });
 
 export default reducers;

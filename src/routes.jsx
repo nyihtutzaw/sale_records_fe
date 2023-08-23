@@ -12,6 +12,9 @@ import CreatePaymentMethod from './pages/paymentMethod/CreatePaymentMethod';
 import EditPaymentMethod from './pages/paymentMethod/EditPaymentMethod';
 import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
+import AdminList from './pages/admin/AdminList';
+import CreateAdmin from './pages/admin/CreateAdmin';
+import EditAdmin from './pages/admin/EditAdmin';
 
 export const routes = [
   {
@@ -19,6 +22,27 @@ export const routes = [
     name: 'Sale Screen',
     path: '',
     component: CreateSaleRecord,
+    layout: '/',
+  },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Admin',
+    path: 'admin',
+    layout: '/',
+    component: AdminList,
+  },
+  {
+    name: 'Create Admin',
+    path: '/admin-create',
+    component: CreateAdmin,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Admin',
+    path: '/admin-edit/:id',
+    component: EditAdmin,
+    invisible: true,
     layout: '/',
   },
   {
@@ -62,6 +86,27 @@ export const routes = [
     component: EditProduct,
     invisible: true,
     layout: '/',
+  },
+  {
+    name: 'Create payment-method',
+    path: '/payment-method-create',
+    component: CreatePaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit Payment method',
+    path: '/payment-method-edit/:id',
+    component: EditPaymentMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    icon: <TableViewOutlined />,
+    name: 'Payment Method',
+    path: 'payment-method',
+    layout: '/',
+    component: PaymentMethodList,
   },
   {
     name: 'Create payment-method',
