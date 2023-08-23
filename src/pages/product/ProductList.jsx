@@ -32,6 +32,10 @@ function ProductList() {
       value: 'initPrice',
     },
     {
+      label: 'WholeSale Price',
+      value: 'wholeSalePrice',
+    },
+    {
       label: 'Price',
       value: 'price',
     },

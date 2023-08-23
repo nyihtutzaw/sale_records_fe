@@ -46,8 +46,8 @@ function CreateSaleRecord() {
   const schema = yup
     .object()
     .shape({
-      customer_id: yup.number().required(),
-      payment_method_id: yup.number().required(),
+      customer_id: yup.number().required('Customer is required'),
+      payment_method_id: yup.number().required('Payment method is required'),
       date: yup.string().required(),
     })
     .required();
