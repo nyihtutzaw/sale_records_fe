@@ -23,8 +23,9 @@ function InputForm({ title,editData }) {
     .object()
     .shape({
       name: yup.string().required(),
-      price: yup.number().required(),
-      initPrice: yup.number().required(),
+      price: yup.number().required('price is required').typeError('price is required'),
+      initPrice: yup.number().required('InitPrice is required').typeError('InitPrice is required'),
+      wholeSalePrice: yup.number().required('wholeSalePrice is required').typeError('wholeSalePrice is required'),
     })
     .required();
   const {
@@ -43,6 +44,7 @@ function InputForm({ title,editData }) {
         name:editData.name,
         price:editData.price,
         initPrice:editData.initPrice,
+        wholeSalePrice:editData.wholeSalePrice,
       })
     }
   },[editData, reset])
@@ -81,6 +83,8 @@ function InputForm({ title,editData }) {
     }
     return false;
   }
+
+  console.log(errors);
   return (
     <FormPageWrapper>
       <BackButton route="/product" />
@@ -130,6 +134,19 @@ function InputForm({ title,editData }) {
                         autoFocus
                         error={errors.initPrice?.message}
                         helperText={errors.initPrice?.message}
+                        inputType={InputType.text}
+                        type="number"
+                      />
+                    </FormItem>
+                    <FormItem label="wholeSalePrice">
+                      <Input
+                        registerProps={register('wholeSalePrice')}
+                        variant="outlined"
+                        name="wholeSalePrice"
+                        autoComplete="wholeSalePrice"
+                        autoFocus
+                        error={errors.wholeSalePrice?.message}
+                        helperText={errors.wholeSalePrice?.message}
                         inputType={InputType.text}
                         type="number"
                       />

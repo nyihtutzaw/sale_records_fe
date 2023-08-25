@@ -32,9 +32,9 @@ export default function NewProductDialog({
   const schema = yup
     .object()
     .shape({
-      product_id: yup.number().required(),
-      price: yup.number().required(),
-      qty: yup.number().required(),
+      product_id: yup.number().required('Product is required'),
+      price: yup.number().required('price is required').typeError('price is required'),
+      qty: yup.number().required('qty is required').typeError('qty is required'),
     })
     .required();
 
@@ -135,6 +135,7 @@ export default function NewProductDialog({
                 autoComplete="price"
                 autoFocus
                 error={errors.price?.message}
+                helperText={errors.price?.message}
                 inputType={InputType.text}
                 type="number"
               />
@@ -149,6 +150,7 @@ export default function NewProductDialog({
                 autoComplete="qty"
                 autoFocus
                 error={errors.qty?.message}
+                helperText={errors.qty?.message}
                 inputType={InputType.text}
                 type="number"
               />
