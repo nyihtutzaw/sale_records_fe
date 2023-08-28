@@ -14,6 +14,7 @@ import LoginForm from './LoginForm';
 // eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member
 import PrivateRoute from './routers/PrivateRoute';
 import store from './store';
+import Invoice from './pages/invoice/Invoice';
 
 const theme = createTheme({
   palette: {
@@ -36,6 +37,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/auth/login" element={<LoginForm />} />
+            <Route path="/invoice/:id" element={<Invoice />} />
             <Route path="/*" element={<PrivateRoute />} />
           </Routes>
         </Router>

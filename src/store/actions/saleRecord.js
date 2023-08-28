@@ -1,6 +1,7 @@
 import * as saleRecordService from '../../services/saleRecordService';
 import {
   DELETE_SALE_RECORD,
+  SET_SALE_RECORD,
   SET_SALE_RECORDS,
 } from '../types/saleRecord';
 import { SET_LOADING } from '../types/status';
@@ -20,7 +21,21 @@ export const getSaleRecords = (query) => async (dispatch) => {
     payload: false,
   });
 };
-
+export const setSaleRecord = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+    payload: true,
+  });
+  const response = await saleRecordService.getEach(id);
+  dispatch({
+    type: SET_SALE_RECORD,
+    payload: response,
+  });
+  dispatch({
+    type: SET_LOADING,
+    payload: false,
+  });
+};
 export const deleteSaleRecord = (id) => async (dispatch) => {
   dispatch({
     type: SET_LOADING,

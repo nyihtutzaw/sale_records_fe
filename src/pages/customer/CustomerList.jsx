@@ -31,6 +31,10 @@ function CustomerList() {
       label: 'Phone',
       value: 'phone',
     },
+    {
+      label: 'Address',
+      value: 'address',
+    },
   ];
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
 

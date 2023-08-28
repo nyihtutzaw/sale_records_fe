@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { FormatListNumbered } from '@mui/icons-material';
 import styled from 'styled-components';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import { getSaleRecords, deleteSaleRecord } from '../../store/actions';
 import { Table } from '../../components/Table';
 import useDialog from '../../hooks/useDialog';
@@ -17,6 +18,7 @@ import { calculateSaleTotal } from '../../utils/calculateSaleTotal';
 function SaleRecordList() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate()
   const saleRecord = useSelector((state) => state.saleRecord);
   const status = useSelector((state) => state.status);
   const [openDialog, setOpenDialog] = useState(false);
@@ -87,6 +89,14 @@ function SaleRecordList() {
         loading={status.loading}
         rows={saleRecord?.saleRecords}
         extraActionButtons={[
+          {
+            icon: <ReceiptIcon />,
+            color: 'primary',
+            onClick: (id) => {
+              navigate(`/invoice/${id}`)
+            },
+            key: 'invoice',
+          },
           {
             icon: <FormatListNumbered />,
             color: 'primary',
