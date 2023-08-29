@@ -1,4 +1,4 @@
-import { DELETE_SALE_RECORD, SET_SALE_RECORDS } from '../types/saleRecord';
+import { DELETE_SALE_RECORD, SET_SALE_RECORD, SET_SALE_RECORDS } from '../types/saleRecord';
 
 const initialState = {
   saleRecords: [],
@@ -13,6 +13,11 @@ const saleRecord = (state = initialState, action) => {
         ...state,
         saleRecords: action.payload.data,
       };
+      case SET_SALE_RECORD:
+        return {
+          ...state,
+          saleRecord: action.payload,
+        };
     case DELETE_SALE_RECORD:
       return {
         ...state,

@@ -24,6 +24,7 @@ function InputForm({ title,editData }) {
     .shape({
       name: yup.string().required(),
       phone: yup.string().required(),
+      address: yup.string().required(),
     })
     .required();
   const {
@@ -36,6 +37,7 @@ function InputForm({ title,editData }) {
     defaultValues: {
       name: editData ? editData?.name : null,
       phone: editData ? editData?.phone : null,
+      address: editData ? editData?.address : null,
     },
   });
 
@@ -118,6 +120,18 @@ function InputForm({ title,editData }) {
                         autoFocus
                         error={errors.phone?.message}
                         helperText={errors.phone?.message}
+                        inputType={InputType.text}
+                      />
+                    </FormItem>
+                    <FormItem label="Address">
+                      <Input
+                        registerProps={register('address')}
+                        variant="outlined"
+                        name="address"
+                        autoComplete="address"
+                        autoFocus
+                        error={errors.address?.message}
+                        helperText={errors.address?.message}
                         inputType={InputType.text}
                       />
                     </FormItem>
