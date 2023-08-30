@@ -39,6 +39,10 @@ function ProductList() {
       label: 'Price',
       value: 'price',
     },
+    {
+      label: 'Qty',
+      value: 'qty',
+    },
   ];
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
 

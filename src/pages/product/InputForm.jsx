@@ -45,6 +45,7 @@ function InputForm({ title,editData }) {
         price:editData.price,
         initPrice:editData.initPrice,
         wholeSalePrice:editData.wholeSalePrice,
+        qty:editData.qty,
       })
     }
   },[editData, reset])
@@ -147,6 +148,19 @@ function InputForm({ title,editData }) {
                         autoFocus
                         error={errors.wholeSalePrice?.message}
                         helperText={errors.wholeSalePrice?.message}
+                        inputType={InputType.text}
+                        type="number"
+                      />
+                    </FormItem>
+                    <FormItem label="Qty">
+                      <Input
+                        registerProps={register('qty')}
+                        variant="outlined"
+                        name="qty"
+                        autoComplete="qty"
+                        autoFocus
+                        error={errors.qty?.message}
+                        helperText={errors.qty?.message}
                         inputType={InputType.text}
                         type="number"
                       />
