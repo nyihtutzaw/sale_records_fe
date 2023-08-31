@@ -1,5 +1,6 @@
 import { TableViewOutlined } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import * as React from 'react';
 import CustomerList from './pages/customer/CustomerList';
 import CreateCustomer from './pages/customer/CreateCustomer';
@@ -15,6 +16,7 @@ import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 import AdminList from './pages/admin/AdminList';
 import CreateAdmin from './pages/admin/CreateAdmin';
 import EditAdmin from './pages/admin/EditAdmin';
+import InvoiceSetting from './pages/invoice_setting/InvoiceSetting';
 
 export const routes = [
   {
@@ -153,5 +155,12 @@ export const routes = [
       },
     
     ],
+  },
+  {
+    icon: <SettingsApplicationsIcon />,
+    name: 'Invoice Setting',
+    path: 'invoice-setting',
+    component: InvoiceSetting,
+    layout: '/',
   },
 ];
