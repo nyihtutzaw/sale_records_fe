@@ -70,14 +70,14 @@ function ProductList() {
     [],
   );
   const loadData = async () => {
-    let query = { limit: 10, page: 1 };
+    let query = { limit: 10, page: 0 };
     if (location.search) query = queryString.parse(location.search);
     dispatch(getProducts(query));
   };
 
   useEffect(() => {
     loadData();
-  }, [dispatch, location.search]);
+  }, [location.search]);
 
   return (
    <TableWrapper>
@@ -86,6 +86,7 @@ function ProductList() {
       headers={headers}
       loading={status.loading}
       rows={product.products}
+      total={product.total}
       extraActionButtons={[
         {
           icon: <EditIcon />,

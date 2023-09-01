@@ -3,6 +3,7 @@ import { DELETE_PRODUCT, SET_PRODUCT, SET_PRODUCTS } from "../types/product";
 const initialState = {
     products: [],
     product: {},
+    total: 0
   };
   
   // eslint-disable-next-line default-param-last
@@ -12,6 +13,7 @@ const initialState = {
         return {
           ...state,
           products: action.payload.data,
+          total: action.payload.total
         };
       case SET_PRODUCT:
         return {
