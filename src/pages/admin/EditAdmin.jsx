@@ -10,13 +10,12 @@ function EditAdmin() {
   
   const admin = useSelector((state) => state.admin.admin);
 
-  const loadData = async () => {
-     dispatch(setAdmin(id));
-  };
-
   useEffect(() => {
-    loadData();
-  }, []);
+    function  loadData() {
+      dispatch(setAdmin(id));
+   };
+   loadData();
+  }, [dispatch, id]);
 
   return <InputForm editData={admin} />;
 }

@@ -15,6 +15,8 @@ export const getAdmins = (query) => async (dispatch) => {
     payload: false,
   });
 };
+
+
 export const setAdmin = (id) => async (dispatch) => {
   dispatch({
     type: 'SET_LOADING',

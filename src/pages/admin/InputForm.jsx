@@ -14,7 +14,6 @@ import { FlexAlignCenter } from '../../styles/common';
 import BackButton from '../../components/Button/BackButton';
 
 function InputForm({ editData }) {
- 
   const navigate = useNavigate();
   const schema = yup
     .object()
@@ -36,14 +35,17 @@ function InputForm({ editData }) {
     },
   });
 
-  const submit = useCallback(async (values) => {
-    // eslint-disable-next-line no-unused-expressions
-    editData ? 
-    await AdminService.update(values, editData.id) :
-    await AdminService.store(values);
-    reset();
-    navigate('/admin');
-  }, [editData]);
+  const submit = useCallback(
+    async (values) => {
+      // eslint-disable-next-line no-unused-expressions
+      editData
+        ? await AdminService.update(values, editData.id)
+        : await AdminService.store(values);
+      reset();
+      navigate('/admin');
+    },
+    [editData, navigate, reset],
+  );
 
   useEffect(() => {
     if (editData) {
@@ -59,7 +61,7 @@ function InputForm({ editData }) {
 
   return (
     <FormPageWrapper>
-      <BackButton route="/admin-list" />
+      <BackButton route="/admin" />
       <Container maxWidth="sm">
         <StyledCard>
           <CardContent>
@@ -111,7 +113,7 @@ function InputForm({ editData }) {
                       </FormItem>
                     )}
                   </VStack>
-                  
+
                   <Button type="submit" fullWidth variant="contained">
                     Submit
                   </Button>
