@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Container,
   Paper,
@@ -18,13 +18,13 @@ import dayjs from 'dayjs';
 import ReactToPrint from 'react-to-print';
 import { setInvoiceSetting, setSaleRecord } from '../../store/actions';
 import { calculateSaleTotal } from '../../utils/calculateSaleTotal';
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 
 function InvoicePage() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const componentRef = useRef();
-  const [isCopied, setIsCopied] = useState(false);
-
+  const { copy } = useCopyToClipboard();
   const saleRecord = useSelector((state) => state.saleRecord.saleRecord);
   const invoiceSetting = useSelector(
     (state) => state.invoiceSetting.invoiceSetting,
@@ -40,101 +40,103 @@ function InvoicePage() {
   }, []);
 
   const copyTextToClipboard = async () => {
-    if(!isCopied) {
-      setIsCopied(true)
-    }
-    const currentPath = window.location.href;
-    if ('clipboard' in navigator) {
-     await navigator.clipboard.writeText(currentPath);
-    }
+    await copy(window.location.href);
   };
 
   return (
     <PageContainer>
       <ButtonContainer>
-        <Button variant="contained" onClick={copyTextToClipboard} size='small'>
-            {isCopied ? 'copied' : 'copy link'}
+        <Button variant="contained" onClick={copyTextToClipboard} size="small">
+          Copy Link
         </Button>
         <ReactToPrint
           // eslint-disable-next-line react/no-unstable-nested-components
-          trigger={() => <Button variant="contained" color='secondary' size='small'>Print</Button>}
+          trigger={() => (
+            <Button variant="contained" color="secondary" size="small">
+              Print
+            </Button>
+          )}
           content={() => componentRef.current}
         />
       </ButtonContainer>
       <Paper>
-         <InvoicePaper elevation={3} ref={componentRef}>
-        <Row>
-          <Typography variant="h4" gutterBottom>
-            {invoiceSetting?.company_name}
-          </Typography>
-          <div>
-            <Typography variant="subtitle1">From:</Typography>
-            <Typography variant="body1">
-              {' '}
+        <InvoicePaper elevation={3} ref={componentRef}>
+          <Row>
+            <Typography variant="h5" gutterBottom>
               {invoiceSetting?.company_name}
             </Typography>
-            <Typography variant="body1"> {invoiceSetting?.phone}</Typography>
-            <Typography variant="body1"> {invoiceSetting?.address}</Typography>
-          </div>
-        </Row>
-        <Row>
-          <div>
-            <Typography variant="subtitle1">To: </Typography>
-            <Typography variant="body1">
-              {saleRecord?.Customer?.name}
-            </Typography>
-            <Typography variant="body1">
-              {saleRecord?.Customer?.phone}
-            </Typography>
-            <Typography variant="body1">
-              {saleRecord?.Customer?.address}
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="body1">
-              Invoice Date: {dayjs(saleRecord?.date).format('DD/MM/YYYY')}
-            </Typography>
-          </div>
-        </Row>
+            <div>
+              <Typography variant="subtitle1">From:</Typography>
+              <Typography variant="body1">
+                {' '}
+                {invoiceSetting?.company_name}
+              </Typography>
+              <Typography variant="body1"> {invoiceSetting?.phone}</Typography>
+              <Typography variant="body1">
+                {' '}
+                {invoiceSetting?.address}
+              </Typography>
+            </div>
+          </Row>
+          <Row>
+            <div>
+              <Typography variant="subtitle1">To: </Typography>
+              <Typography variant="body1">
+                {saleRecord?.Customer?.name}
+              </Typography>
+              <Typography variant="body1">
+                {saleRecord?.Customer?.phone}
+              </Typography>
+              <Typography variant="body1">
+                {saleRecord?.Customer?.address}
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="body1">
+                Invoice Date: {dayjs(saleRecord?.date).format('DD/MM/YYYY')}
+              </Typography>
+            </div>
+          </Row>
 
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Description</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Total</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {saleRecord?.sale_record_details?.map((item) => (
-                <TableRow key={`${item.name}/${item.id}`}>
-                  <TableCell>{item?.Product?.name}</TableCell>
-                  <TableCell align="right">{item?.qty}</TableCell>
-                  <TableCell align="right">${item?.price}</TableCell>
-                  <TableCell align="right">${item.qty * item.price}</TableCell>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Description</TableCell>
+                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="right">Price</TableCell>
+                  <TableCell align="right">Total</TableCell>
                 </TableRow>
-              ))}
-              <TableRow>
-                <TableCell colSpan={3} align="right">
-                  <strong>Total Amount:</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>
-                    ${calculateSaleTotal(saleRecord?.sale_record_details)}
-                  </strong>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Typography variant="body" style={{ marginTop: 20 }}>
-          Notes - {invoiceSetting?.notes}
-        </Typography>
-      </InvoicePaper>
+              </TableHead>
+              <TableBody>
+                {saleRecord?.sale_record_details?.map((item) => (
+                  <TableRow key={`${item.name}/${item.id}`}>
+                    <TableCell>{item?.Product?.name}</TableCell>
+                    <TableCell align="right">{item?.qty}</TableCell>
+                    <TableCell align="right">{item?.price}</TableCell>
+                    <TableCell align="right">
+                      {item.qty * item.price}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell colSpan={3} align="right">
+                    <strong>Total Amount:</strong>
+                  </TableCell>
+                  <TableCell align="right">
+                    <strong>
+                      {calculateSaleTotal(saleRecord?.sale_record_details)}
+                    </strong>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Typography variant="body" style={{ marginTop: 20 }}>
+            Notes - {invoiceSetting?.notes}
+          </Typography>
+        </InvoicePaper>
       </Paper>
-     
     </PageContainer>
   );
 }
