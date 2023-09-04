@@ -26,6 +26,7 @@ export function Table({
   height = '65vh',
   loading = false,
   buttons,
+  total = 0,
   extraActionButtons,
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -34,6 +35,7 @@ export function Table({
   const query = queryString.parse(location.search);
   const handleChangePage = useCallback(
     (_event, newPage) => {
+      console.log(newPage);
       navigate(`${location.pathname}?page=${newPage}&limit=${rowsPerPage}`);
     },
     [location.pathname, navigate, rowsPerPage],
@@ -121,8 +123,8 @@ export function Table({
       <TableFooter>
         <TablePagination
           component="div"
-          count={rows.length}
-          page={query.page ? Number(query.page) - 1 : 0}
+          count={total}
+          page={query.page ? Number(query.page) : 0}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
