@@ -117,13 +117,7 @@ export const routes = [
     invisible: true,
     layout: '/',
   },
-  {
-    name: 'Edit Payment method',
-    path: '/payment-method-edit/:id',
-    component: EditPaymentMethod,
-    invisible: true,
-    layout: '/',
-  },
+ 
   {
     icon: <TableViewOutlined />,
     name: 'Sale Record',
@@ -153,14 +147,14 @@ export const routes = [
         layout: '/',
         component: PaymentMethodList,
       },
+      {
+        icon: <SettingsApplicationsIcon />,
+        name: 'Invoice Setting',
+        path: 'invoice-setting',
+        component: InvoiceSetting,
+        layout: '/',
+      },
     
     ],
-  },
-  {
-    icon: <SettingsApplicationsIcon />,
-    name: 'Invoice Setting',
-    path: 'invoice-setting',
-    component: InvoiceSetting,
-    layout: '/',
   },
 ];

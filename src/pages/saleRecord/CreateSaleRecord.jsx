@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Delete, Edit } from '@mui/icons-material';
+import dayjs from 'dayjs';
 import { FormItem } from '../../components/FormItem';
 import { InputType } from '../../constants';
 import { FlexAlignCenter } from '../../styles/common';
@@ -59,6 +60,9 @@ function CreateSaleRecord() {
     reset,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      date:dayjs(new Date())
+    }
   });
 
   useEffect(() => {
@@ -138,7 +142,6 @@ function CreateSaleRecord() {
             <FlexAlignCenter $direction="column">
               <Box sx={{ width: '100%' }}>
                 <h3>Create Sale Record</h3>
-
                 <Grid
                   container
                   spacing={2}
