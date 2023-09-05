@@ -83,7 +83,7 @@ function InputForm({ title,editData }) {
   }
   return (
     <FormPageWrapper>
-      <BackButton route="/product" />
+      <BackButton route="/payment-method" />
       <Container maxWidth="sm">
         <StyledCard>
           <CardContent>

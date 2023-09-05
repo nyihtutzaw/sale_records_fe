@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
   Container,
   Paper,
@@ -12,36 +12,18 @@ import {
   Button,
 } from '@mui/material';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import ReactToPrint from 'react-to-print';
-import { setInvoiceSetting, setSaleRecord } from '../../store/actions';
 import { calculateSaleTotal } from '../../utils/calculateSaleTotal';
-import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
+import useInvoice from './useInvoice';
 
 function InvoicePage() {
-  const dispatch = useDispatch();
-  const { id } = useParams();
   const componentRef = useRef();
-  const { copy } = useCopyToClipboard();
-  const saleRecord = useSelector((state) => state.saleRecord.saleRecord);
-  const invoiceSetting = useSelector(
-    (state) => state.invoiceSetting.invoiceSetting,
-  );
-
-  const loadData = async () => {
-    dispatch(setSaleRecord(id));
-    dispatch(setInvoiceSetting());
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const copyTextToClipboard = async () => {
-    await copy(window.location.href);
-  };
+  const   {
+    saleRecord,
+    copyTextToClipboard,
+    invoiceSetting
+  } = useInvoice()
 
   return (
     <PageContainer>

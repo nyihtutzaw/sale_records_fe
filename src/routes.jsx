@@ -103,13 +103,13 @@ export const routes = [
     invisible: true,
     layout: '/',
   },
-  {
-    icon: <TableViewOutlined />,
-    name: 'Payment Method',
-    path: 'payment-method',
-    layout: '/',
-    component: PaymentMethodList,
-  },
+  // {
+  //   icon: <TableViewOutlined />,
+  //   name: 'Payment Method',
+  //   path: 'payment-method',
+  //   layout: '/',
+  //   component: PaymentMethodList,
+  // },
   {
     name: 'Create payment-method',
     path: '/payment-method-create',

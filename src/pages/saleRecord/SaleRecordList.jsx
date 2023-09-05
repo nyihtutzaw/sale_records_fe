@@ -1,99 +1,37 @@
-import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import queryString from 'query-string';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState } from 'react';
-
-import dayjs from 'dayjs';
 import { FormatListNumbered } from '@mui/icons-material';
 import styled from 'styled-components';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import { getSaleRecords, deleteSaleRecord } from '../../store/actions';
 import { Table } from '../../components/Table';
-import useDialog from '../../hooks/useDialog';
 import ProductDetailsDialog from './ProductDetailsDialog';
-import { calculateSaleTotal } from '../../utils/calculateSaleTotal';
+import useSaleRecord from './useSaleRecord';
 
 function SaleRecordList() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate()
-  const saleRecord = useSelector((state) => state.saleRecord);
-  const status = useSelector((state) => state.status);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [detailRecord, setDetailRecord] = useState([]);
-
-  const headers = [
-    {
-      label: 'No',
-      value: 'Num',
-      content: (_data, index) => index + 1,
-    },
-    {
-      label: 'Date',
-      value: 'date',
-      content: (_data) => dayjs(_data).format('DD/MM/YYYY')
-    },
-    {
-      label: 'Total',
-      value: 'sale_record_details',
-      content: (_data) => calculateSaleTotal(_data),
-    },
-    {
-      label: 'Customer',
-      value: 'Customer',
-      content: (_data) => _data.name
-    },
-    {
-      label: 'Payment Method',
-      value: 'payment_method',
-      content: (_data) => _data.name
-    },
-  ];
-  const { showConfirmDialog, closeConfirmDialog } = useDialog();
-
-  const handleDelete = useCallback(
-    (id) => {
-      dispatch(deleteSaleRecord(id));
-      closeConfirmDialog();
-    },
-    [closeConfirmDialog, dispatch],
-  );
-
-  const loadData = async () => {
-    let query = { limit: 10, page: 1 };
-    if (location.search) query = queryString.parse(location.search);
-    dispatch(getSaleRecords(query));
-  };
-
-  useEffect(() => {
-    loadData();
-  }, [location.search]);
-
-  const toggle = () => {
-    setOpenDialog((prevOpen) => !prevOpen);
-  };
-
-  const handleSaleRecordDetail = (recordID) => {
-    setDetailRecord(
-      saleRecord?.saleRecords?.find((record) => record?.id === recordID)
-        ?.sale_record_details,
-    );
-  };
+  const {
+    headers,
+    loading,
+    rows,
+    openDialog,
+    handleDetailDialogToggle,
+    detailRecord,
+    handleSaleRecordDetail,
+    handleDelete,
+    showConfirmDialog,
+    handleInvoice
+  } = useSaleRecord();
 
   return (
     <TableWrapper>
       <Table
         headers={headers}
-        loading={status.loading}
-        rows={saleRecord?.saleRecords}
+        loading={loading}
+        rows={rows}
         extraActionButtons={[
           {
             icon: <ReceiptIcon />,
             color: 'primary',
             onClick: (id) => {
-              navigate(`/invoice/${id}`)
+              handleInvoice(id)
             },
             key: 'invoice',
           },
@@ -101,7 +39,7 @@ function SaleRecordList() {
             icon: <FormatListNumbered />,
             color: 'primary',
             onClick: (id) => {
-              toggle();
+              handleDetailDialogToggle();
               handleSaleRecordDetail(id);
             },
             key: 'details',
@@ -124,7 +62,7 @@ function SaleRecordList() {
       />
       <ProductDetailsDialog
         open={openDialog}
-        toggle={toggle}
+        toggle={handleDetailDialogToggle}
         data={detailRecord}
       />
     </TableWrapper>
@@ -133,5 +71,5 @@ function SaleRecordList() {
 export default SaleRecordList;
 
 const TableWrapper = styled.div`
- width: 100%;
-`
+  width: 100%;
+`;
