@@ -11,12 +11,14 @@ import { calculateSaleTotal } from '../../utils/calculateSaleTotal';
 
 function useSaleRecord() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
   const saleRecord = useSelector((state) => state.saleRecord);
   const status = useSelector((state) => state.status);
   const [openDialog, setOpenDialog] = useState(false);
   const [detailRecord, setDetailRecord] = useState([]);
+  const [editData, setEditData] = useState([]);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
 
   const headers = [
     {
@@ -27,7 +29,7 @@ function useSaleRecord() {
     {
       label: 'Date',
       value: 'date',
-      content: (_data) => dayjs(_data).format('DD/MM/YYYY')
+      content: (_data) => dayjs(_data).format('DD/MM/YYYY'),
     },
     {
       label: 'Total',
@@ -37,12 +39,12 @@ function useSaleRecord() {
     {
       label: 'Customer',
       value: 'Customer',
-      content: (_data) => _data.name
+      content: (_data) => _data?.name,
     },
     {
       label: 'Payment Method',
       value: 'payment_method',
-      content: (_data) => _data.name
+      content: (_data) => _data?.name,
     },
   ];
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
@@ -74,7 +76,18 @@ function useSaleRecord() {
 
   const handleInvoice = (id) => {
     navigate(`/invoice/${id}`);
-  }
+  };
+
+  const handleEdit = (id) => {
+    setEditData(
+      saleRecord?.saleRecords?.find((record) => record?.id === id),
+    );
+    setOpenEditDialog(true);
+  };
+
+  const handleEditDialogToggle = () => {
+    setOpenEditDialog((prevOpen) => !prevOpen);
+  };
 
   return {
     headers,
@@ -86,8 +99,11 @@ function useSaleRecord() {
     handleSaleRecordDetail,
     handleDelete,
     showConfirmDialog,
-    handleInvoice
+    handleInvoice,
+    handleEdit,
+    openEditDialog,
+    editData,
+    handleEditDialogToggle,
   };
 }
 export default useSaleRecord;
-

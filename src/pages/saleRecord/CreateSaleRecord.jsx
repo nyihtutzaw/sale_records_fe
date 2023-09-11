@@ -61,7 +61,7 @@ function CreateSaleRecord() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      date:dayjs(new Date())
+      date: dayjs(new Date())
     }
   });
 
@@ -157,7 +157,7 @@ function CreateSaleRecord() {
                         inputType={InputType.date}
                         error={errors.date?.message}
                         helperText={errors.date?.message}
-
+                        defaultValue={dayjs(new Date())}
                       />
                     </FormItem>
                   </Grid>
