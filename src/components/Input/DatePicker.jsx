@@ -28,8 +28,8 @@ export function DatePicker({
             <>
               <DatePickerUI
                 {...otherProps}
-                value={field.value}
-                defaultValue={dayjs(new Date())}
+                // value={field.value}
+               // defaultValue={dayjs(new Date())}
                 onChange={(date) =>
                   field.onChange(dayjs(new Date(date)).format(dateFormat))
                 }

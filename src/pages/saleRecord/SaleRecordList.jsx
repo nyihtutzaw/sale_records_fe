@@ -2,9 +2,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { FormatListNumbered } from '@mui/icons-material';
 import styled from 'styled-components';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import EditIcon from '@mui/icons-material/Edit';
 import { Table } from '../../components/Table';
 import ProductDetailsDialog from './ProductDetailsDialog';
 import useSaleRecord from './useSaleRecord';
+import EditSaleRecordDialog from './EditSaleRecordDialog';
 
 function SaleRecordList() {
   const {
@@ -17,7 +19,11 @@ function SaleRecordList() {
     handleSaleRecordDetail,
     handleDelete,
     showConfirmDialog,
-    handleInvoice
+    handleInvoice,
+    handleEdit,
+    openEditDialog,
+    editData,
+    handleEditDialogToggle,
   } = useSaleRecord();
 
   return (
@@ -45,6 +51,13 @@ function SaleRecordList() {
             key: 'details',
           },
           {
+            icon: <EditIcon />,
+            color: 'primary',
+            onClick: (id) => {
+              handleEdit(id);
+            },
+          },
+          {
             icon: <DeleteIcon />,
             color: 'error',
             key: 'delete',
@@ -64,6 +77,11 @@ function SaleRecordList() {
         open={openDialog}
         toggle={handleDetailDialogToggle}
         data={detailRecord}
+      />
+      <EditSaleRecordDialog
+        open={openEditDialog}
+        toggle={handleEditDialogToggle}
+        data={editData}
       />
     </TableWrapper>
   );

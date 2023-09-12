@@ -1,6 +1,7 @@
 import * as saleRecordService from '../../services/saleRecordService';
 import {
   DELETE_SALE_RECORD,
+  EDIT_SALE_RECORD,
   SET_SALE_RECORD,
   SET_SALE_RECORDS,
 } from '../types/saleRecord';
@@ -36,6 +37,22 @@ export const setSaleRecord = (id) => async (dispatch) => {
     payload: false,
   });
 };
+export const editSaleRecord = (id,data, populateData) => async (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+    payload: true,
+  });
+  await saleRecordService.update(data, id);
+  dispatch({
+    type: EDIT_SALE_RECORD,
+    payload: {id, data: populateData},
+  });
+  dispatch({
+    type: SET_LOADING,
+    payload: false,
+  });
+};
+
 export const deleteSaleRecord = (id) => async (dispatch) => {
   dispatch({
     type: SET_LOADING,

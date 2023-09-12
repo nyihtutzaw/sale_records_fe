@@ -1,4 +1,9 @@
-import { DELETE_SALE_RECORD, SET_SALE_RECORD, SET_SALE_RECORDS } from '../types/saleRecord';
+import {
+  DELETE_SALE_RECORD,
+  EDIT_SALE_RECORD,
+  SET_SALE_RECORD,
+  SET_SALE_RECORDS,
+} from '../types/saleRecord';
 
 const initialState = {
   saleRecords: [],
@@ -13,11 +18,25 @@ const saleRecord = (state = initialState, action) => {
         ...state,
         saleRecords: action.payload.data,
       };
-      case SET_SALE_RECORD:
-        return {
-          ...state,
-          saleRecord: action.payload,
-        };
+    case SET_SALE_RECORD:
+      return {
+        ...state,
+        saleRecord: action.payload,
+      };
+    case EDIT_SALE_RECORD:
+      return {
+        ...state,
+        saleRecords: state.saleRecords.map((account) => {
+          if (account.id !== action.payload.id) {
+            return account;
+          }
+          return {
+            ...account,
+            ...action.payload.data,
+          };
+        }),
+      };
+
     case DELETE_SALE_RECORD:
       return {
         ...state,
