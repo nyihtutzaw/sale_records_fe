@@ -50,3 +50,22 @@ export async function deleteSaleRecord(id, values) {
     return false;
   }
 }
+
+export async function updateSaleRecordItem(values, id) {
+  try {
+    const response = await sendData(`sale-record-detail/${id}`, values, 'PUT');
+    return response;
+  } catch (e) {
+  
+    return false;
+  }
+}
+export async function deleteSaleRecordItem(id, values) {
+  try {
+    const response = await sendData(`sale-record-detail/${id}`, values, 'DELETE');
+    return response;
+  } catch (e) {
+  
+    return false;
+  }
+}
