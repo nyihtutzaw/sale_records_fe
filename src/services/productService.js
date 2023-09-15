@@ -30,7 +30,15 @@ export async function store(values) {
   }
 }
 
-
+export async function storeProductPurchase(values) {
+  try {
+    
+    const response = await sendData('product-purchase/store', values);
+    return response;
+  } catch (e) {
+    return false;
+  }
+}
 
 export async function update(values, id) {
   try {
