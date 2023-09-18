@@ -1,10 +1,13 @@
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Table } from '../../components/Table';
 import useProduct from './useProduct';
 
+
 function ProductList() {
+  const navigate = useNavigate();
   const {
     headers,
     actionButtons,
@@ -13,46 +16,67 @@ function ProductList() {
     total,
     handleDelete,
     handleEdit,
-    showConfirmDialog
-  } = useProduct()
+    showConfirmDialog,
+  } = useProduct();
 
   return (
-   <TableWrapper>
-     <Table
-      buttons={actionButtons}
-      headers={headers}
-      loading={loading}
-      rows={rows}
-      total={total}
-      extraActionButtons={[
-        {
-          icon: <EditIcon />,
-          color: 'primary',
-          onClick: (id) => {
-            handleEdit(id);
+    <TableWrapper>
+      <Table
+        buttons={actionButtons}
+        headers={headers}
+        loading={loading}
+        rows={rows}
+        total={total}
+        extraActionButtons={[
+          {
+            icon: (
+              <DetailButton>
+                Purchase
+                <br />
+                Details
+              </DetailButton>
+            ),
+            color: 'primary',
+            onClick: (id) => {
+              navigate(`/purchase-details/${id}`);
+            },
           },
-        },
-        {
-          icon: <DeleteIcon />,
-          color: 'error',
-          onClick: (id) => {
-            showConfirmDialog({
-              title: 'Sample Confirm Dialog',
-              body: 'Are you sure to delete?',
-              onConfirm: () => handleDelete(id),
-              cancelLabel: 'Cancel',
-              acceptLabel: 'Confirm',
-            });
+          {
+            icon: <EditIcon />,
+            color: 'primary',
+            onClick: (id) => {
+              handleEdit(id);
+            },
           },
-        },
-      ]}
-    />
-   </TableWrapper>
+          {
+            icon: <DeleteIcon />,
+            color: 'error',
+            onClick: (id) => {
+              showConfirmDialog({
+                title: 'Sample Confirm Dialog',
+                body: 'Are you sure to delete?',
+                onConfirm: () => handleDelete(id),
+                cancelLabel: 'Cancel',
+                acceptLabel: 'Confirm',
+              });
+            },
+          },
+        ]}
+      />
+    </TableWrapper>
   );
 }
 export default ProductList;
 
 const TableWrapper = styled.div`
- width: 100%;
+  width: 100%;
+`;
+const DetailButton = styled.button`
+  background-color: green;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
 `
-

@@ -17,6 +17,7 @@ import AdminList from './pages/admin/AdminList';
 import CreateAdmin from './pages/admin/CreateAdmin';
 import EditAdmin from './pages/admin/EditAdmin';
 import InvoiceSetting from './pages/invoice_setting/InvoiceSetting';
+import PurchaseDetails from './pages/product/PurchaseDetails';
 
 export const routes = [
   {
@@ -86,6 +87,13 @@ export const routes = [
     name: 'Edit Product',
     path: '/product-edit/:id',
     component: EditProduct,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Purchase',
+    path: '/purchase-details/:id',
+    component: PurchaseDetails,
     invisible: true,
     layout: '/',
   },
