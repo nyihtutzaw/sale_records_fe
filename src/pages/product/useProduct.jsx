@@ -11,13 +11,14 @@ function useProduct() {
   const dispatch = useDispatch();
   const location = useLocation();
   const product = useSelector((state) => state.product);
-  const status = useSelector((state) => state.status);
-
+  // const status = useSelector((state) => state.status);
+  const { page, limit } = queryString.parse(location.search);
+  const pageLimitNo = ((parseInt(page - 1, 10)) * parseInt(limit , 10));
   const headers = [
     {
       label: 'No',
       value: 'No',
-      content: (_data, index) => index + 1,
+      content: (_data, index) => pageLimitNo ? pageLimitNo + index + 1 : index  + 1,
     },
     {
       label: 'Name',
@@ -68,7 +69,7 @@ function useProduct() {
   );
 
   useEffect(() => {
-    let query = { limit: 10, page: 0 };
+    let query = { limit: 10, page: 1 };
     if (location.search) query = queryString.parse(location.search);
     dispatch(getProducts(query));
   }, [dispatch, location.search]);
@@ -79,7 +80,6 @@ function useProduct() {
     handleDelete,
     handleEdit,
     showConfirmDialog,
-    loading: status.loading,
     rows: product?.products,
     total: product?.total,
   };

@@ -12,7 +12,6 @@ export const getPaymentMethods = (query) => async (dispatch) => {
     payload: true,
   });
   const response = await PaymentMethodService.getAll(query);
-  console.log(response);
   dispatch({
     type: SET_PAYMENT_METHODS,
     payload: response,

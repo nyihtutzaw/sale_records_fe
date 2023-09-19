@@ -12,7 +12,6 @@ export const getProducts = (query) => async (dispatch) => {
     payload: true,
   });
   const response = await productService.getAll(query);
-  console.log(response);
   dispatch({
     type: SET_PRODUCTS,
     payload: response,

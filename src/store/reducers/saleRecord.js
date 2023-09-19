@@ -8,6 +8,7 @@ import {
 const initialState = {
   saleRecords: [],
   saleRecord: {},
+  total: 0
 };
 
 // eslint-disable-next-line default-param-last
@@ -17,6 +18,7 @@ const saleRecord = (state = initialState, action) => {
       return {
         ...state,
         saleRecords: action.payload.data,
+        total: action.payload.total
       };
     case SET_SALE_RECORD:
       return {
@@ -43,6 +45,7 @@ const saleRecord = (state = initialState, action) => {
         saleRecords: state.saleRecords.filter(
           (account) => account.id !== action.payload,
         ),
+        total: state.total - 1
       };
 
     default:

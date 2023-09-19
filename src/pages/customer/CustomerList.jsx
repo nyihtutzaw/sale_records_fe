@@ -8,8 +8,8 @@ function CustomerList() {
   const {
     headers,
     actionButtons,
-    loading,
     rows,
+    total,
     handleEdit,
     handleDelete,
     showConfirmDialog,
@@ -20,8 +20,8 @@ function CustomerList() {
       <Table
         buttons={actionButtons}
         headers={headers}
-        loading={loading}
         rows={rows}
+        total={total}
         extraActionButtons={[
           {
             icon: <EditIcon />,

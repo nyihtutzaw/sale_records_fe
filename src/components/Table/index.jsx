@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper';
 import styled, { css } from 'styled-components';
 import queryString from 'query-string';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LoadingTableSkeleton from '../loading/TableLoading';
 import { COLORS } from '../../styles/color';
 import { HStack } from '../HStack';
@@ -24,7 +25,6 @@ export function Table({
   rows,
   width = '100%',
   height = '65vh',
-  loading = false,
   buttons,
   total = 0,
   extraActionButtons,
@@ -35,11 +35,11 @@ export function Table({
   const query = queryString.parse(location.search);
   const handleChangePage = useCallback(
     (_event, newPage) => {
-      console.log(newPage);
-      navigate(`${location.pathname}?page=${newPage}&limit=${rowsPerPage}`);
+      navigate(`${location.pathname}?page=${newPage + 1}&limit=${rowsPerPage}`);
     },
     [location.pathname, navigate, rowsPerPage],
   );
+  const status = useSelector((state) => state.status);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -78,44 +78,47 @@ export function Table({
                   )}
                 </TableRow>
               </StickyTableHead>
-              {loading && <LoadingTableSkeleton headers={headers} />}
-              <TableBody>
-                {rows?.map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    {headers.map((header) => (
-                      <StickyTableCell
-                        // eslint-disable-next-line react/no-array-index-key
-                        key={`table-body-${header?.value}`}
-                        stickyleft={header.stickyLeft}
-                        stickyright={header.stickyRight}
-                      >
-                        {header.content
-                          ? header.content(row[header.value], index)
-                          : row[header.value]}
-                      </StickyTableCell>
-                    ))}
+              {status?.loading ? (
+                <LoadingTableSkeleton headers={headers} />
+              ) : (
+                <TableBody>
+                  {rows?.map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      {headers.map((header) => (
+                        <StickyTableCell
+                          // eslint-disable-next-line react/no-array-index-key
+                          key={`table-body-${header?.value}`}
+                          stickyleft={header.stickyLeft}
+                          stickyright={header.stickyRight}
+                        >
+                          {header.content
+                            ? header.content(row[header.value], index)
+                            : row[header.value]}
+                        </StickyTableCell>
+                      ))}
 
-                    {extraActionButtons && (
-                      <TableCell>
-                        <HStack spacing={3}>
-                          {extraActionButtons.map((btn) => (
-                            <IconButton
-                              key={btn.key}
-                              color={btn.color}
-                              onClick={() => btn.onClick(row.id)}
-                            >
-                              {btn.icon}
-                            </IconButton>
-                          ))}
-                        </HStack>
-                      </TableCell>
-                    )}
-                  </TableRow>
-                ))}
-              </TableBody>
+                      {extraActionButtons && (
+                        <TableCell>
+                          <HStack spacing={3}>
+                            {extraActionButtons.map((btn) => (
+                              <IconButton
+                                key={btn.key}
+                                color={btn.color}
+                                onClick={() => btn.onClick(row.id)}
+                              >
+                                {btn.icon}
+                              </IconButton>
+                            ))}
+                          </HStack>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              )}
             </MuiTable>
           </StyledTableContainer>
         </TableWrapper>
@@ -124,7 +127,8 @@ export function Table({
         <TablePagination
           component="div"
           count={total}
-          page={query.page ? Number(query.page) : 0}
+          // page={query.page ? Number(query.page) : 0}
+          page={query.page ? Number(query.page) - 1 : 0}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}

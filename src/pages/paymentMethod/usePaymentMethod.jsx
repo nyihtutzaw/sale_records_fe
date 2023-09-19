@@ -11,7 +11,6 @@ function usePaymentMethod() {
   const dispatch = useDispatch();
   const location = useLocation();
   const paymentMethod = useSelector((state) => state.paymentMethod);
-  const status = useSelector((state) => state.status);
 
   const headers = [
     {
@@ -65,7 +64,6 @@ function usePaymentMethod() {
     handleDelete,
     handleEdit,
     rows: paymentMethod?.paymentMethods,
-    loading: status?.loading,
     showConfirmDialog,
   };
 }
