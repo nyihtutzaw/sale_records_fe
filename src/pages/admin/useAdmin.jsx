@@ -11,7 +11,6 @@ function useAdmin() {
   const dispatch = useDispatch();
   const location = useLocation();
   const admin = useSelector((state) => state.admin);
-  const status = useSelector((state) => state.status);
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
 
   const headers = [
@@ -60,7 +59,6 @@ function useAdmin() {
   return {
     headers,
     actionButtons,
-    loading: status.loading,
     rows: admin.admins,
     handleEdit,
     handleDelete,

@@ -9,7 +9,7 @@ const status = (state = initialState, action) => {
     case 'SET_LOADING':
       return {
         ...state,
-        loading: !state.loading,
+        loading: action.payload,
       };
     case 'SET_SUCCESS':
       return {

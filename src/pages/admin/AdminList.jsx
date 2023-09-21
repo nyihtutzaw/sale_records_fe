@@ -19,7 +19,7 @@ function AdminList() {
     <Table
       buttons={actionButtons}
       headers={headers}
-      loading={loading}
+      
       rows={rows}
       extraActionButtons={[
         {

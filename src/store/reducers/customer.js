@@ -3,6 +3,7 @@ import { DELETE_CUSTOMER, SET_CUSTOMER, SET_CUSTOMERS } from "../types/customer"
 const initialState = {
     customers: [],
     customer: {},
+    total: 0
   };
   
   // eslint-disable-next-line default-param-last
@@ -12,6 +13,7 @@ const initialState = {
         return {
           ...state,
           customers: action.payload.data,
+          total: action.payload.total
         };
       case SET_CUSTOMER:
         return {
@@ -24,6 +26,7 @@ const initialState = {
           customers: state.customers.filter(
             (account) => account.id !== action.payload,
           ),
+          total: state.total - 1
         };
   
       default:

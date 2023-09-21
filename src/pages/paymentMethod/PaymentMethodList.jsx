@@ -8,7 +8,6 @@ function PaymentMethodList() {
   const {
     headers,
     actionButtons,
-    loading,
     rows,
     handleDelete,
     handleEdit,
@@ -20,7 +19,6 @@ function PaymentMethodList() {
      <Table
       buttons={actionButtons}
       headers={headers}
-      loading={loading}
       rows={rows}
       extraActionButtons={[
         {

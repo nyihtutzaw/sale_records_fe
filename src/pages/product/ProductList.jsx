@@ -12,7 +12,6 @@ function ProductList() {
     headers,
     actionButtons,
     rows,
-    loading,
     total,
     handleDelete,
     handleEdit,
@@ -24,7 +23,6 @@ function ProductList() {
       <Table
         buttons={actionButtons}
         headers={headers}
-        loading={loading}
         rows={rows}
         total={total}
         extraActionButtons={[
@@ -32,8 +30,6 @@ function ProductList() {
             icon: (
               <DetailButton>
                 Purchase
-                <br />
-                Details
               </DetailButton>
             ),
             color: 'primary',

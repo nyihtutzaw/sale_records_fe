@@ -26,6 +26,7 @@ const initialState = {
           products: state.products.filter(
             (account) => account.id !== action.payload,
           ),
+          total: state.total - 1
         };
   
       default:

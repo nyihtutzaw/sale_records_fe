@@ -14,7 +14,6 @@ function useSaleRecord() {
   const navigate = useNavigate();
   const location = useLocation();
   const saleRecord = useSelector((state) => state.saleRecord);
-  const status = useSelector((state) => state.status);
   const [openDialog, setOpenDialog] = useState(false);
   const [detailRecord, setDetailRecord] = useState([]);
   const [editData, setEditData] = useState([]);
@@ -91,8 +90,8 @@ function useSaleRecord() {
 
   return {
     headers,
-    loading: status.loading,
     rows: saleRecord.saleRecords,
+    total: saleRecord?.total,
     openDialog,
     handleDetailDialogToggle,
     detailRecord,

@@ -11,8 +11,8 @@ import EditSaleRecordDialog from './EditSaleRecordDialog';
 function SaleRecordList() {
   const {
     headers,
-    loading,
     rows,
+    total,
     openDialog,
     handleDetailDialogToggle,
     detailRecord,
@@ -30,8 +30,8 @@ function SaleRecordList() {
     <TableWrapper>
       <Table
         headers={headers}
-        loading={loading}
         rows={rows}
+        total={total}
         extraActionButtons={[
           {
             icon: <ReceiptIcon />,

@@ -11,7 +11,6 @@ function useCustomer() {
   const dispatch = useDispatch();
   const location = useLocation();
   const customer = useSelector((state) => state.customer);
-  const status = useSelector((state) => state.status);
 
   const headers = [
     {
@@ -70,8 +69,8 @@ function useCustomer() {
   return {
     headers,
     actionButtons,
-    loading: status.loading,
     rows: customer.customers,
+    total: customer?.total,
     handleEdit,
     handleDelete,
     showConfirmDialog,
