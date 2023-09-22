@@ -4,4 +4,5 @@ export const InputType = {
   check: 'checkbox',
   date: 'date',
   radio: 'radio',
+  autocomplete: 'autocomplete',
 };

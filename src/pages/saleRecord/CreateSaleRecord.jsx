@@ -21,17 +21,16 @@ import dayjs from 'dayjs';
 import { FormItem } from '../../components/FormItem';
 import { InputType } from '../../constants';
 import { FlexAlignCenter } from '../../styles/common';
-import { SET_LOADING } from '../../store/types/status';
 import ProductTable from './ProductTable';
 import NewProductDialog from './NewProductDialog';
 import { Input } from '../../components/Input';
-import * as saleRecordService from '../../services/saleRecordService';
 import { getCustomers, getPaymentMethods } from '../../store/actions';
 import {
   deleteProductInSaleRecords,
   getProductOptions,
 } from '../../store/actions/saleRecordDetail';
-
+import { SET_LOADING } from '../../store/types/status';
+import *  as saleRecordService from '../../services/saleRecordService'
 
 function CreateSaleRecord() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,8 +47,9 @@ function CreateSaleRecord() {
     .object()
     .shape({
       customer_id: yup.number().required('Customer is required'),
+      // product: yup.object().required('Product is required'),
       payment_method_id: yup.number().required('Payment method is required'),
-      date: yup.string().required(),
+      // date: yup.string().required(),
     })
     .required();
   const {
@@ -88,6 +88,7 @@ function CreateSaleRecord() {
   }));
 
   const submit = useCallback(async (values) => {
+
     if (saleRecordDetail?.saleRecordDetails?.length > 0) {
       dispatch({
         type: SET_LOADING,
@@ -151,13 +152,13 @@ function CreateSaleRecord() {
                   <Grid item xs={12} sm={4}>
                     <FormItem label="Date">
                       <Input
-                        control={control}
+                       control={control}
                         registerProps={register('date')}
                         name="date"
                         inputType={InputType.date}
                         error={errors.date?.message}
                         helperText={errors.date?.message}
-                        defaultValue={dayjs(new Date())}
+                       defaultValue={dayjs(new Date())}
                       />
                     </FormItem>
                   </Grid>

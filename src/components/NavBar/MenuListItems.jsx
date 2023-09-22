@@ -12,8 +12,6 @@ import { COLORS } from "../../styles/color";
 
 export function MenuListItems() {
   const location = useLocation();
-
-  console.log(location.pathname);
   return (
     <>
       {routes.map((route) =>

@@ -5,11 +5,9 @@ import { SelectBox } from './SelectBox';
 import { DatePicker } from './DatePicker';
 import { Radio } from './Radio';
 import { InputType } from '../../constants';
+import AutoCompletebox from './AutoCompletebox';
 
-export function Input({
-  inputType = InputType.text,
-  ...props
-}) {
+export function Input({ inputType = InputType.text, ...props }) {
   const componentProps = { ...props };
 
   switch (inputType) {
@@ -21,10 +19,11 @@ export function Input({
       return <SelectBox {...componentProps} />;
     case InputType.date:
       return <DatePicker {...componentProps} />;
-      case InputType.radio:
-        return <Radio {...componentProps} />;
+    case InputType.radio:
+      return <Radio {...componentProps} />;
+    case InputType.autocomplete:
+      return <AutoCompletebox {...componentProps} />;
     default:
       return null;
   }
 }
-
