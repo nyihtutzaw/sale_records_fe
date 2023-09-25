@@ -11,6 +11,8 @@ import EditProduct from './pages/product/EditProduct';
 import PaymentMethodList from './pages/paymentMethod/PaymentMethodList';
 import CreatePaymentMethod from './pages/paymentMethod/CreatePaymentMethod';
 import EditPaymentMethod from './pages/paymentMethod/EditPaymentMethod';
+import CreateDeliveryMethod from './pages/deliveryMethod/CreateDeliveryMethod';
+import EditDeliveryMethod from './pages/deliveryMethod/EditDeliveryMethod';
 import SaleRecordList from './pages/saleRecord/SaleRecordList';
 import CreateSaleRecord from './pages/saleRecord/CreateSaleRecord';
 import AdminList from './pages/admin/AdminList';
@@ -18,6 +20,7 @@ import CreateAdmin from './pages/admin/CreateAdmin';
 import EditAdmin from './pages/admin/EditAdmin';
 import InvoiceSetting from './pages/invoice_setting/InvoiceSetting';
 import PurchaseDetails from './pages/product/PurchaseDetails';
+import DeliveryMethodList from './pages/deliveryMethod/DeliveryMethodList';
 
 export const routes = [
   {
@@ -111,13 +114,20 @@ export const routes = [
     invisible: true,
     layout: '/',
   },
-  // {
-  //   icon: <TableViewOutlined />,
-  //   name: 'Payment Method',
-  //   path: 'payment-method',
-  //   layout: '/',
-  //   component: PaymentMethodList,
-  // },
+  {
+    name: 'Create delivery-method',
+    path: '/delivery-method-create',
+    component: CreateDeliveryMethod,
+    invisible: true,
+    layout: '/',
+  },
+  {
+    name: 'Edit delivery method',
+    path: '/delivery-method-edit/:id',
+    component: EditDeliveryMethod,
+    invisible: true,
+    layout: '/',
+  },
   {
     name: 'Create payment-method',
     path: '/payment-method-create',
@@ -154,6 +164,13 @@ export const routes = [
         path: 'payment-method',
         layout: '/',
         component: PaymentMethodList,
+      },
+      {
+        icon: <TableViewOutlined />,
+        name: 'Delivery Method',
+        path: 'delivery-method',
+        layout: '/',
+        component: DeliveryMethodList,
       },
       {
         icon: <SettingsApplicationsIcon />,

@@ -9,3 +9,4 @@ export * from './saleRecordDetail';
 export * from './paymentMethod';
 export * from './admin';
 export * from './invoiceSetting';
+export * from './deliveryMethod';

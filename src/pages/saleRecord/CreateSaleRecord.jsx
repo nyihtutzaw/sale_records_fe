@@ -24,7 +24,7 @@ import { FlexAlignCenter } from '../../styles/common';
 import ProductTable from './ProductTable';
 import NewProductDialog from './NewProductDialog';
 import { Input } from '../../components/Input';
-import { getCustomers, getPaymentMethods } from '../../store/actions';
+import { getCustomers, getDeliveryMethods, getPaymentMethods } from '../../store/actions';
 import {
   deleteProductInSaleRecords,
   getProductOptions,
@@ -39,6 +39,7 @@ function CreateSaleRecord() {
   const { loading } = useSelector((state) => state.status);
   const customer = useSelector((state) => state.customer);
   const paymentMethod = useSelector((state) => state.paymentMethod);
+  const deliveryMethod = useSelector((state) => state.deliveryMethod);
   const saleRecordDetail = useSelector((state) => state.saleRecordDetail);
 
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function CreateSaleRecord() {
       customer_id: yup.number().required('Customer is required'),
       // product: yup.object().required('Product is required'),
       payment_method_id: yup.number().required('Payment method is required'),
+      delivery_method_id: yup.number().required('delivery method is required'),
       // date: yup.string().required(),
     })
     .required();
@@ -68,6 +70,7 @@ function CreateSaleRecord() {
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPaymentMethods());
+    dispatch(getDeliveryMethods());
   }, []);
 
   const loadProducts = async () => {
@@ -86,9 +89,12 @@ function CreateSaleRecord() {
     value: eachpaymentMethod?.id,
     label: eachpaymentMethod?.name,
   }));
+  const deliveryMethodOptions = deliveryMethod?.deliveryMethods?.map((eachdeliveryMethod) => ({
+    value: eachdeliveryMethod?.id,
+    label: eachdeliveryMethod?.name,
+  }));
 
   const submit = useCallback(async (values) => {
-
     if (saleRecordDetail?.saleRecordDetails?.length > 0) {
       dispatch({
         type: SET_LOADING,
@@ -185,6 +191,19 @@ function CreateSaleRecord() {
                         inputType={InputType.select}
                         error={errors.payment_method_id?.message}
                         helperText={errors.payment_method_id?.message}
+                      />
+                    </FormItem>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <FormItem label="Delivery Method">
+                      <Input
+                        control={control}
+                        options={deliveryMethodOptions}
+                        registerProps={register('delivery_method_id')}
+                        name="delivery_method_id"
+                        inputType={InputType.select}
+                        error={errors.delivery_method_id?.message}
+                        helperText={errors.delivery_method_id?.message}
                       />
                     </FormItem>
                   </Grid>

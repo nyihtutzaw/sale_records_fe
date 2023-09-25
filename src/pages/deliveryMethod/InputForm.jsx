@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as productService from '../../services/productService';
+import * as deliveryMethodService from '../../services/deliveryMethodService';
 import { FormItem } from '../../components/FormItem';
 import { Input } from '../../components/Input';
 import { VStack } from '../../components/VStack';
@@ -23,9 +23,6 @@ function InputForm({ title,editData }) {
     .object()
     .shape({
       name: yup.string().required(),
-      price: yup.number().required('price is required').typeError('price is required'),
-      initPrice: yup.number().required('InitPrice is required').typeError('InitPrice is required'),
-      wholeSalePrice: yup.number().required('wholeSalePrice is required').typeError('wholeSalePrice is required'),
     })
     .required();
   const {
@@ -34,24 +31,12 @@ function InputForm({ title,editData }) {
     formState: { errors, isDirty },
     reset,
   } = useForm({
-    resolver: yupResolver(schema), 
-    defaultValues : {
-      qty: 0
-    }
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: editData ? editData?.name : null,
+      price: editData ? editData?.price : null,
+    },
   });
-
-
-  useEffect(()=>{
-    if (editData){
-      reset({
-        name:editData.name,
-        price:editData.price,
-        initPrice:editData.initPrice,
-        wholeSalePrice:editData.wholeSalePrice,
-        qty:editData.qty,
-      })
-    }
-  },[editData, reset])
 
 
   const submit = useCallback(
@@ -62,8 +47,8 @@ function InputForm({ title,editData }) {
        });
       // eslint-disable-next-line no-unused-expressions
       const status = editData
-        ? await productService.update(values, editData?.id)
-        : await productService.store(values);
+        ? await deliveryMethodService.update(values, editData?.id)
+        : await deliveryMethodService.store(values);
        dispatch({
          type: SET_LOADING,
          payload: false,
@@ -71,12 +56,21 @@ function InputForm({ title,editData }) {
 
       if (status) {
         reset();
-        navigate('/product');
+        navigate('/delivery-method');
       }
     },
-    [dispatch, editData, navigate, reset],
+    [editData],
   );
 
+  useEffect(() => {
+    if (editData) {
+      reset({
+        name: editData?.name,
+      });
+    } else {
+      reset();
+    }
+  }, [editData, reset]);
 
   const isDisabled = () => {
     if(loading) {
@@ -87,11 +81,9 @@ function InputForm({ title,editData }) {
     }
     return false;
   }
-
-  console.log(errors);
   return (
     <FormPageWrapper>
-      <BackButton route="/product" />
+      <BackButton route="/payment-method" />
       <Container maxWidth="sm">
         <StyledCard>
           <CardContent>
@@ -116,58 +108,7 @@ function InputForm({ title,editData }) {
                         inputType={InputType.text}
                       />
                     </FormItem>
-                    <FormItem label="price">
-                      <Input
-                        registerProps={register('price')}
-                        variant="outlined"
-                        name="price"
-                        autoComplete="price"
-                        autoFocus
-                        error={errors.price?.message}
-                        helperText={errors.price?.message}
-                        inputType={InputType.text}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem label="initPrice">
-                      <Input
-                        registerProps={register('initPrice')}
-                        variant="outlined"
-                        name="initPrice"
-                        autoComplete="initPrice"
-                        autoFocus
-                        error={errors.initPrice?.message}
-                        helperText={errors.initPrice?.message}
-                        inputType={InputType.text}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem label="wholeSalePrice">
-                      <Input
-                        registerProps={register('wholeSalePrice')}
-                        variant="outlined"
-                        name="wholeSalePrice"
-                        autoComplete="wholeSalePrice"
-                        autoFocus
-                        error={errors.wholeSalePrice?.message}
-                        helperText={errors.wholeSalePrice?.message}
-                        inputType={InputType.text}
-                        type="number"
-                      />
-                    </FormItem>
-                    <FormItem label="Qty">
-                      <Input
-                        registerProps={register('qty')}
-                        variant="outlined"
-                        name="qty"
-                        autoComplete="qty"
-                        autoFocus
-                        error={errors.qty?.message}
-                        helperText={errors.qty?.message}
-                        inputType={InputType.text}
-                        type="number"
-                      />
-                    </FormItem>
+                    
                   </VStack>
 
                   <Button
