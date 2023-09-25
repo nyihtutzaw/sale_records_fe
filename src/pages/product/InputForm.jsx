@@ -34,7 +34,10 @@ function InputForm({ title,editData }) {
     formState: { errors, isDirty },
     reset,
   } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema), 
+    defaultValues : {
+      qty: 0
+    }
   });
 
 
