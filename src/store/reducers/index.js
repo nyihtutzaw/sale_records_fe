@@ -12,6 +12,7 @@ import saleRecordDetail from './saleRecordDetail';
 import paymentMethod from './paymentMethod';
 import admin from './admin';
 import invoiceSetting from './invoiceSetting';
+import deliveryMethod from './deliveryMethod';
 
 const reducers = combineReducers({
   status,
@@ -25,7 +26,8 @@ const reducers = combineReducers({
   saleRecordDetail,
   paymentMethod,
   admin,
-  invoiceSetting
+  invoiceSetting,
+  deliveryMethod,
 });
 
 export default reducers;

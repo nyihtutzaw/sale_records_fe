@@ -45,6 +45,11 @@ function useSaleRecord() {
       value: 'payment_method',
       content: (_data) => _data?.name,
     },
+    {
+      label: 'Delivery Method',
+      value: 'delivery_method',
+      content: (_data) => _data?.name,
+    },
   ];
   const { showConfirmDialog, closeConfirmDialog } = useDialog();
 
@@ -67,10 +72,10 @@ function useSaleRecord() {
   };
 
   const handleSaleRecordDetail = (recordID) => {
-    setDetailRecord(
-      saleRecord?.saleRecords?.find((record) => record?.id === recordID)
-        ?.sale_record_details,
-    );
+    const details = saleRecord?.saleRecords?.find((record) => record?.id === recordID)
+    if(details) {
+      setDetailRecord(details?.sale_record_details)
+    }
   };
 
   const handleInvoice = (id) => {

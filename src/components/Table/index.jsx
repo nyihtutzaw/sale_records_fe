@@ -3,6 +3,8 @@ import {
   Card,
   CardContent,
   IconButton,
+  Menu,
+  MenuItem,
   Table as MuiTable,
 } from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
@@ -16,6 +18,7 @@ import styled, { css } from 'styled-components';
 import queryString from 'query-string';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LoadingTableSkeleton from '../loading/TableLoading';
 import { COLORS } from '../../styles/color';
 import { HStack } from '../HStack';
@@ -28,6 +31,7 @@ export function Table({
   buttons,
   total = 0,
   extraActionButtons,
+  isActionButtonsCollpase = false,
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const location = useLocation();
@@ -48,6 +52,15 @@ export function Table({
         query.page ? Number(query.page) : 1
       }&limit=${parseInt(event.target.value, 10)}`,
     );
+  };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -102,17 +115,46 @@ export function Table({
 
                       {extraActionButtons && (
                         <TableCell>
-                          <HStack spacing={3}>
-                            {extraActionButtons.map((btn) => (
-                              <IconButton
-                                key={btn.key}
-                                color={btn.color}
-                                onClick={() => btn.onClick(row.id)}
-                              >
-                                {btn.icon}
+                          {isActionButtonsCollpase ? (
+                            <>
+                              <IconButton onClick={handleClick}>
+                                <MoreVertIcon />
                               </IconButton>
-                            ))}
-                          </HStack>
+                              <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                elevation={1}
+                              >
+                                {extraActionButtons.map((btn) => (
+                                  <MenuItem key={btn.key} >
+                                    <IconButton
+                                      key={btn.key}
+                                      color={btn.color}
+                                      onClick={() => {
+                                        handleClose();
+                                        btn.onClick(row.id)
+                                      }}
+                                    >
+                                      {btn.icon}
+                                    </IconButton>
+                                  </MenuItem>
+                                ))}
+                              </Menu>
+                            </>
+                          ) : (
+                            <HStack spacing={3}>
+                              {extraActionButtons.map((btn) => (
+                                <IconButton
+                                  key={btn.key}
+                                  color={btn.color}
+                                  onClick={() => btn.onClick(row.id)}
+                                >
+                                  {btn.icon}
+                                </IconButton>
+                              ))}
+                            </HStack>
+                          )}
                         </TableCell>
                       )}
                     </TableRow>

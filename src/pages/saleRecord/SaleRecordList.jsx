@@ -8,6 +8,7 @@ import ProductDetailsDialog from './ProductDetailsDialog';
 import useSaleRecord from './useSaleRecord';
 import EditSaleRecordDialog from './EditSaleRecordDialog';
 
+
 function SaleRecordList() {
   const {
     headers,
@@ -32,6 +33,7 @@ function SaleRecordList() {
         headers={headers}
         rows={rows}
         total={total}
+        isActionButtonsCollpase
         extraActionButtons={[
           {
             icon: <ReceiptIcon />,
@@ -45,8 +47,9 @@ function SaleRecordList() {
             icon: <FormatListNumbered />,
             color: 'primary',
             onClick: (id) => {
-              handleDetailDialogToggle();
+              console.log(id);
               handleSaleRecordDetail(id);
+              handleDetailDialogToggle();
             },
             key: 'details',
           },
@@ -56,6 +59,7 @@ function SaleRecordList() {
             onClick: (id) => {
               handleEdit(id);
             },
+            key: 'edit'
           },
           {
             icon: <DeleteIcon />,
