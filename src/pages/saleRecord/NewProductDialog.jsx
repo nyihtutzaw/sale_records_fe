@@ -11,7 +11,7 @@ import {
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Input } from '../../components/Input';
 import { InputType } from '../../constants';
 import { FormItem } from '../../components/FormItem';
@@ -19,6 +19,7 @@ import {
   addProductToSaleRecords,
   editExistingProductInSaleRecords,
 } from '../../store/actions';
+import { debounceApiCall } from '../../services/debounceApiService';
 
 export default function NewProductDialog({
   open,
@@ -26,23 +27,30 @@ export default function NewProductDialog({
   editData,
   setEditData,
 }) {
-  const saleRecordDetail = useSelector((state) => state.saleRecordDetail);
   const dispatch = useDispatch();
 
   const schema = yup
     .object()
     .shape({
-      product_id: yup.number().required('Product is required'),
-      price: yup.number().required('price is required').typeError('price is required'),
-      qty: yup.number().required('qty is required').typeError('qty is required'),
+      product: yup.object().required('Product is required'),
+      price: yup
+        .number()
+        .required('price is required')
+        .typeError('price is required'),
+      qty: yup
+        .number()
+        .required('qty is required')
+        .typeError('qty is required'),
     })
     .required();
 
-  const defaultValues = {
-      product_id: editData ? editData?.product_id : null,
-      price: editData ? editData?.price : null,
-      qty: editData ? editData?.qty : null,
-    }
+  // const defaultValues = {
+  //   product: editData
+  //     ? { value: editData?.product_id, label: editData?.Product?.name }
+  //     : null,
+  //   price: editData ? editData?.price : null,
+  //   qty: editData ? editData?.qty : null,
+  // };
 
   const {
     control,
@@ -54,37 +62,57 @@ export default function NewProductDialog({
     setValue,
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues,
+    // defaultValues,
   });
 
   const updatedPrice = watch('price');
   const updatedQty = watch('qty');
 
-  let products = [];
-  if (editData) {
-    products = saleRecordDetail?.originProductOptions;
-  } else {
-    products = saleRecordDetail?.productOptions;
-  }
-  const productOptions = products?.map((product) => ({
-    value: product?.id,
-    label: product?.name,
-  }));
+  const fetchProducts = async (input) => {
+    try {
+      let productOptions = [];
+      const res = await debounceApiCall('search-product', `search=${input}`);
+      if (res.data) {
+        productOptions = res?.data?.map((product) => ({
+          value: product?.id,
+          label: product?.name,
+          price: product?.price,
+          name: product?.name,
+        }));
+      }
+      return productOptions;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   useEffect(() => {
-    setValue('product_id', editData?.product_id);
+    setValue('product', {
+      value: editData?.product_id,
+      name: editData?.name,
+    });
     setValue('price', editData?.price);
     setValue('qty', editData?.qty);
-  }, [editData, setValue]);
+  }, [editData, reset]);
 
-  const onSubmit = (data) => {
+  const onSubmit = (values) => {
+    const data = {
+      product_id: values?.product?.value,
+      name: values?.product?.name,
+      price: values?.price,
+      qty: values?.qty,
+    };
     if (editData) {
       dispatch(editExistingProductInSaleRecords(data));
       setEditData(null);
     } else {
       dispatch(addProductToSaleRecords(data));
     }
-    reset(); 
+    reset({
+      product: null,
+      price: null,
+      qty: null
+    });
     // toggle();
   };
 
@@ -108,24 +136,23 @@ export default function NewProductDialog({
           alignItems="center"
           justifyContent="space-between"
         >
-          <Grid item xs={6}>
-            <FormItem label="Product">
-              <Input
-                registerProps={register('product_id')}
-                control={control}
-                options={productOptions}
-                name="product_id"
-                inputType={InputType.select}
-                error={errors.product_id?.message}
-                helperText="Product is required"
-                disabled={editData}
-                onValueChange={(e) => {
-                  const selectedProduct = products.find(product => product?.id === e)
-                  setValue('price', selectedProduct?.price)
-                }}
-              />
-            </FormItem>
-          </Grid>
+          {!editData && (
+            <Grid item xs={6}>
+              <FormItem label="Product">
+                <Input
+                  control={control}
+                  rules={{ required: true }}
+                  inputType={InputType.autocomplete}
+                  name="product"
+                  fetch={(input) => fetchProducts(input)}
+                  onValueChange={(e) => {
+                    console.log(e);
+                    setValue('price', e?.price);
+                  }}
+                />
+              </FormItem>
+            </Grid>
+          )}
           <Grid item xs={6}>
             <FormItem label="Price">
               <Input
