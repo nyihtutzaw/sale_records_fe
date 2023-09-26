@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   Table as MuiTable,
+  Typography,
 } from '@mui/material';
 import TablePagination from '@mui/material/TablePagination';
 import TableBody from '@mui/material/TableBody';
@@ -127,13 +128,13 @@ export function Table({
                                 elevation={1}
                               >
                                 {extraActionButtons.map((btn) => (
-                                  <MenuItem key={btn.key} >
+                                  <MenuItem key={btn.key}>
                                     <IconButton
                                       key={btn.key}
                                       color={btn.color}
                                       onClick={() => {
                                         handleClose();
-                                        btn.onClick(row.id)
+                                        btn.onClick(row.id);
                                       }}
                                     >
                                       {btn.icon}
@@ -165,7 +166,14 @@ export function Table({
           </StyledTableContainer>
         </TableWrapper>
       </CardContent>
-      <TableFooter>
+
+      <TableFooter
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <TotalText>Total Sale Records - {total}</TotalText>
         <TablePagination
           component="div"
           count={total}
@@ -231,4 +239,13 @@ const TableFooter = styled.div`
   padding: 0px 50px;
   display: flex;
   justify-content: flex-end;
+`;
+
+const TotalText = styled(Typography)`
+  && {
+    margin-bottom: 10px;
+    text-align: right;
+    padding-right: 15px;
+    font-weight: bold;
+  }
 `;
