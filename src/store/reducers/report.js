@@ -1,10 +1,7 @@
 import { SET_PROFIT_REPORT } from "../types/report";
 
 const initialState = {
-    profit: {
-      data: [],
-      totalProfit : 0
-    }
+    profit: []
   };
   
   // eslint-disable-next-line default-param-last
@@ -13,10 +10,7 @@ const initialState = {
       case SET_PROFIT_REPORT:
         return {
           ...state,
-          profit: {
-            data: action.payload.data,
-            totalProfit: action.payload.totalProfit,
-          }
+          profit: action.payload.data,
         };
   
       default:

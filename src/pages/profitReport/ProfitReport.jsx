@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Table } from '../../components/Table';
 import useProfitReport from './useProfitReport';
@@ -19,11 +19,12 @@ function ProfitReport() {
     }));
   };
 
-
   return (
-    <div>
-      <Grid container spacing={2} alignItems="center" paddingX={10}>
-        <Grid item xs={12} sm={4}>
+    <Container
+      paddingX={10}
+    >
+      <Grid container spacing={2} alignItems="center" marginBottom={5}>
+        <Grid item xs={6} sm={4}>
           <FormItem label="Date">
             <Input
               name="date"
@@ -34,7 +35,7 @@ function ProfitReport() {
             />
           </FormItem>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={6} sm={4}>
           <FormItem label="Date">
             <Input
               name="date"
@@ -56,22 +57,11 @@ function ProfitReport() {
           </Button>
         </Grid>
       </Grid>
-      {data?.data?.length > 0 && (
-        <div>
-          <TableWrapper>
-            <Typography
-              sx={{
-                textAlign: 'right',
-                padding: '10px',
-              }}
-            >
-              Total Profit : {data?.totalProfit}
-            </Typography>
-            <Table headers={headers} rows={data?.data} />
-          </TableWrapper>
-        </div>
-      )}
-    </div>
+
+      <TableWrapper>
+        <Table headers={headers} rows={data} />
+      </TableWrapper>
+    </Container>
   );
 }
 export default ProfitReport;

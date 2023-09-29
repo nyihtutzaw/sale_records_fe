@@ -5,7 +5,6 @@ function useProfitReport() {
   const dispatch = useDispatch();
   const report = useSelector((state) => state.report);
 
-  const calculateTotal = (data) => (data?.qty || 0) * (data?.price || 0)
   const headers = [
     {
       label: 'No',
@@ -14,18 +13,30 @@ function useProfitReport() {
     },
     {
       label: 'Product',
-      value: 'Product',
-      content: (_data) => _data?.name,
-    },
-    {
-      label: 'Qty',
-      value: 'qty',
+      value: 'name',
       content: (_data) => _data,
     },
     {
-      label: 'Total',
-      content: (_data) => calculateTotal(_data),
+      label: 'Qty',
+      value: 'totalQty',
+      content: (_data) => _data,
     },
+    {
+      label: 'Total Sold Price',
+      value: 'totalSoldAmount',
+      content: (_data) => _data,
+    },
+    {
+      label: 'Total Init Price',
+      value: 'totalPurchaseAmount',
+      content: (_data) => _data,
+    },
+    {
+      label: 'Profit',
+      value: 'profit',
+      content: (_data) => _data,
+    },
+    
   ];
 
   const loadData = (query) => {
