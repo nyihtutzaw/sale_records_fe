@@ -10,3 +10,4 @@ export * from './paymentMethod';
 export * from './admin';
 export * from './invoiceSetting';
 export * from './deliveryMethod';
+export * from './report';

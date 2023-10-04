@@ -9,12 +9,13 @@ import { Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { ErrorContaienr } from '../../styles/common';
 
+const DATE_FORMAT = 'YYYY-MM-DD';
 export function DatePicker({
   label,
   value,
   control,
   onChange,
-  dateFormat = 'YYYY-MM-DD',
+  dateFormat = DATE_FORMAT,
   ...otherProps
 }) {
 
@@ -47,18 +48,23 @@ export function DatePicker({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePickerUI {...otherProps} />
+      <DatePickerUI {...otherProps} onChange={onChange}/>
     </LocalizationProvider>
   );
 }
 
-export function DatePickerUI({ ...otherProps }) {
+export function DatePickerUI({ onChange, ...otherProps }) {
+
   return (
     <FormControl fullWidth>
       <MuiDatePicker
         {...otherProps}
         inputFormat="yyyy-MM-dd"
         renderInput={(params) => <TextField {...params} />}
+        onChange={(date) => {
+          onChange(dayjs(new Date(date)).format(DATE_FORMAT));
+          // Add your custom logic here
+        }}
       />
     </FormControl>
   );

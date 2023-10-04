@@ -34,6 +34,7 @@ function SaleRecordList() {
         rows={rows}
         total={total}
         isActionButtonsCollpase
+        bottomLabelText = 'Total Sale Records'
         extraActionButtons={[
           {
             icon: <ReceiptIcon />,

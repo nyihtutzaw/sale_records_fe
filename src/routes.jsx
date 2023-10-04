@@ -21,6 +21,7 @@ import EditAdmin from './pages/admin/EditAdmin';
 import InvoiceSetting from './pages/invoice_setting/InvoiceSetting';
 import PurchaseDetails from './pages/product/PurchaseDetails';
 import DeliveryMethodList from './pages/deliveryMethod/DeliveryMethodList';
+import ProfitReport from './pages/profitReport/ProfitReport';
 
 export const routes = [
   {
@@ -178,6 +179,23 @@ export const routes = [
         path: 'invoice-setting',
         component: InvoiceSetting,
         layout: '/',
+      },
+    
+    ],
+  },
+
+  {
+    icon: <TableViewOutlined />,
+    name: 'Report',
+    collapse: true,
+    layout: '/',
+    view: [
+      {
+        icon: <TableViewOutlined />,
+        name: 'Profit Report',
+        path: 'profit-report',
+        layout: '/',
+        component: ProfitReport,
       },
     
     ],

@@ -13,6 +13,7 @@ import paymentMethod from './paymentMethod';
 import admin from './admin';
 import invoiceSetting from './invoiceSetting';
 import deliveryMethod from './deliveryMethod';
+import report from './report';
 
 const reducers = combineReducers({
   status,
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   admin,
   invoiceSetting,
   deliveryMethod,
+  report
 });
 
 export default reducers;

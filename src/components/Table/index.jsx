@@ -30,9 +30,11 @@ export function Table({
   width = '100%',
   height = '65vh',
   buttons,
-  total = 0,
+  total,
   extraActionButtons,
   isActionButtonsCollpase = false,
+  bottomLabelText,
+  bottomLabelValue,
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const location = useLocation();
@@ -109,7 +111,7 @@ export function Table({
                           stickyright={header.stickyRight}
                         >
                           {header.content
-                            ? header.content(row[header.value], index)
+                            ? header.content(header.value ? row[header.value] : row, index)
                             : row[header.value]}
                         </StickyTableCell>
                       ))}
@@ -173,16 +175,22 @@ export function Table({
           flexDirection: 'column',
         }}
       >
-        <TotalText>Total Sale Records - {total}</TotalText>
-        <TablePagination
-          component="div"
-          count={total}
-          // page={query.page ? Number(query.page) : 0}
-          page={query.page ? Number(query.page) - 1 : 0}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        {bottomLabelText && (
+          <TotalText>
+            {bottomLabelText} - {bottomLabelValue || total}
+          </TotalText>
+        )}
+        {total && (
+          <TablePagination
+            component="div"
+            count={total || 0}
+            // page={query.page ? Number(query.page) : 0}
+            page={query.page ? Number(query.page) - 1 : 0}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
       </TableFooter>
     </CardWrapper>
   );
