@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Button, Container, Grid } from '@mui/material';
+import { Button, Container, Grid, TableCell,TableRow } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Table } from '../../components/Table';
 import useProfitReport from './useProfitReport';
@@ -9,7 +9,7 @@ import { InputType } from '../../constants';
 import { FormItem } from '../../components/FormItem';
 
 function ProfitReport() {
-  const { headers, loadData, data } = useProfitReport();
+  const { headers, loadData, data, totalProfit, totalSold } = useProfitReport();
   const [dateRange, setDateRange] = useState({ start_date: '', end_date: '' });
 
   const handleDateRange = (field, value) => {
@@ -20,9 +20,7 @@ function ProfitReport() {
   };
 
   return (
-    <Container
-      paddingX={10}
-    >
+    <Container paddingX={10}>
       <Grid container spacing={2} alignItems="center" marginBottom={5}>
         <Grid item xs={6} sm={4}>
           <FormItem label="Date">
@@ -59,7 +57,17 @@ function ProfitReport() {
       </Grid>
 
       <TableWrapper>
-        <Table headers={headers} rows={data} />
+        <Table
+          headers={headers}
+          rows={data}
+          footerRow={
+            <TableRow>
+              <TableCell colspan="3">Total :</TableCell>
+              <TableCell>{totalSold}</TableCell>
+              <TableCell>{totalProfit}</TableCell>
+            </TableRow>
+          }
+        />
       </TableWrapper>
     </Container>
   );

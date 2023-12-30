@@ -23,7 +23,7 @@ export async function getData(url, params) {
       if (e.response.status === 401) {
         NotificationManager.info('You need to login again');
         // removeCache('access_token')
-        window.location = '/';
+       // window.location = '/';
       }
     });
 

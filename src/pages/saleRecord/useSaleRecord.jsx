@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
-import { useState } from 'react';
+
 
 import dayjs from 'dayjs';
 import { getSaleRecords, deleteSaleRecord } from '../../store/actions';

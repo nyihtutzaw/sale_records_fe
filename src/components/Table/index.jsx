@@ -30,6 +30,7 @@ export function Table({
   width = '100%',
   height = '65vh',
   buttons,
+  footerRow,
   total,
   extraActionButtons,
   isActionButtonsCollpase = false,
@@ -42,6 +43,14 @@ export function Table({
   const query = queryString.parse(location.search);
   const handleChangePage = useCallback(
     (_event, newPage) => {
+      if (window.location.search) {
+        const currentUrl = window.location.pathname + window.location.search;
+        const updatedUrl = `${currentUrl}&page=${
+          newPage + 1
+        }&limit=${rowsPerPage}`;
+        navigate(updatedUrl);
+      }
+
       navigate(`${location.pathname}?page=${newPage + 1}&limit=${rowsPerPage}`);
     },
     [location.pathname, navigate, rowsPerPage],
@@ -98,72 +107,50 @@ export function Table({
                 <LoadingTableSkeleton headers={headers} />
               ) : (
                 <TableBody>
-                  {rows?.map((row, index) => (
+                {rows?.map((row, index) => {
+                  const rowId = row.id; // Capture the id for the current row
+                  return (
                     <TableRow
-                      key={row.id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      key={rowId}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
                     >
                       {headers.map((header) => (
                         <StickyTableCell
-                          // eslint-disable-next-line react/no-array-index-key
                           key={`table-body-${header?.value}`}
                           stickyleft={header.stickyLeft}
                           stickyright={header.stickyRight}
                         >
                           {header.content
-                            ? header.content(header.value ? row[header.value] : row, index)
+                            ? header.content(
+                                header.value ? row[header.value] : row,
+                                index,
+                              )
                             : row[header.value]}
                         </StickyTableCell>
                       ))}
-
                       {extraActionButtons && (
-                        <TableCell>
-                          {isActionButtonsCollpase ? (
-                            <>
-                              <IconButton onClick={handleClick}>
-                                <MoreVertIcon />
-                              </IconButton>
-                              <Menu
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                elevation={1}
-                              >
-                                {extraActionButtons.map((btn) => (
-                                  <MenuItem key={btn.key}>
-                                    <IconButton
-                                      key={btn.key}
-                                      color={btn.color}
-                                      onClick={() => {
-                                        handleClose();
-                                        btn.onClick(row.id);
-                                      }}
-                                    >
-                                      {btn.icon}
-                                    </IconButton>
-                                  </MenuItem>
-                                ))}
-                              </Menu>
-                            </>
-                          ) : (
-                            <HStack spacing={3}>
-                              {extraActionButtons.map((btn) => (
-                                <IconButton
-                                  key={btn.key}
-                                  color={btn.color}
-                                  onClick={() => btn.onClick(row.id)}
-                                >
-                                  {btn.icon}
-                                </IconButton>
-                              ))}
-                            </HStack>
-                          )}
-                        </TableCell>
-                      )}
+                      <TableCell>
+                        <HStack spacing={3}>
+                          {extraActionButtons.map((btn) => (
+                            <IconButton
+                              key={btn.key}
+                              color={btn.color}
+                              onClick={() => btn.onClick(row.id)}
+                            >
+                              {btn.icon}
+                            </IconButton>
+                          ))}
+                        </HStack>
+                      </TableCell>
+                    )}
                     </TableRow>
-                  ))}
-                </TableBody>
+                  );
+                })}
+              </TableBody>
               )}
+              {footerRow && footerRow}
             </MuiTable>
           </StyledTableContainer>
         </TableWrapper>
